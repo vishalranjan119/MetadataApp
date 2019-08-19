@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Test</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Test</value>
+    </caseValues>
+    <fields>
+        <label><!-- CheckboxField5 --></label>
+        <name>CheckboxField5__c</name>
+    </fields>
+    <fields>
+        <label><!-- CurrencyField5 --></label>
+        <name>CurrencyField5__c</name>
+    </fields>
+    <fields>
+        <help><!-- DateTime Help Text --></help>
+        <label><!-- DateTimeField6 --></label>
+        <name>DateTimeField6__c</name>
+    </fields>
+    <fields>
+        <help><!-- DateTime Help Text --></help>
+        <label><!-- DateTimeField7 --></label>
+        <name>DateTimeField7__c</name>
+    </fields>
+    <fields>
+        <label><!-- EmailField5 --></label>
+        <name>EmailField5__c</name>
+    </fields>
+    <fields>
+        <help><!-- Email Help Text --></help>
+        <label><!-- EmailField7 --></label>
+        <name>EmailField7__c</name>
+    </fields>
+    <fields>
+        <help><!-- Date Help Text --></help>
+        <label><!-- Enter date of birth(in years) --></label>
+        <name>Enter_date_of_birth_in_years__c</name>
+    </fields>
+    <fields>
+        <help><!-- Testing Rich Text Field Help Text --></help>
+        <label><!-- HtmlField5 --></label>
+        <name>HtmlField5__c</name>
+    </fields>
+    <fields>
+        <help><!-- Checkox Field Help Text --></help>
+        <label><!-- Is this$%^&amp;*true --></label>
+        <name>Is_th1234567890is_true__c</name>
+    </fields>
+    <fields>
+        <help><!-- Checkox Field Help Text --></help>
+        <label><!-- Is this$%^&amp;*true --></label>
+        <name>Is_this_123true__c</name>
+    </fields>
+    <fields>
+        <help><!-- Geolocation Help Text --></help>
+        <label><!-- LocationField6 --></label>
+        <name>LocationField6__c</name>
+    </fields>
+    <fields>
+        <help><!-- Geolocation Help Text --></help>
+        <label><!-- LocationField7 --></label>
+        <name>LocationField7__c</name>
+    </fields>
+    <fields>
+        <label><!-- LongTextAreaField5 --></label>
+        <name>LongTextAreaField5__c</name>
+    </fields>
+    <fields>
+        <help><!-- Testing Long Text Area Help Text --></help>
+        <label><!-- LongTextAreaField6 --></label>
+        <name>LongTextAreaField6__c</name>
+    </fields>
+    <fields>
+        <help><!-- Testing Long Text Area Help Text --></help>
+        <label><!-- LongTextAreaField7 --></label>
+        <name>LongTextAreaField7__c</name>
+    </fields>
+    <fields>
+        <help><!-- Mutlipicklist Help Text --></help>
+        <label><!-- MultiselectPicklistField7 --></label>
+        <name>MultiselectPicklistField7__c</name>
+        <picklistValues>
+            <masterLabel>pick1</masterLabel>
+            <translation><!-- pick1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>pick2</masterLabel>
+            <translation><!-- pick2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Percent Help Text --></help>
+        <label><!-- PercentField6 --></label>
+        <name>PercentField6__c</name>
+    </fields>
+    <fields>
+        <help><!-- Percent Help Text --></help>
+        <label><!-- PercentField7 --></label>
+        <name>PercentField7__c</name>
+    </fields>
+    <fields>
+        <label><!-- PhoneField6 --></label>
+        <name>PhoneField6__c</name>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Phone Help Text --></help>
+        <label><!-- PhoneField7 --></label>
+        <name>PhoneField7__c</name>
+    </fields>
+    <fields>
+        <help><!-- Picklist Help Text --></help>
+        <label><!-- PicklistField5 --></label>
+        <name>PicklistField5__c</name>
+        <picklistValues>
+            <masterLabel>pick1</masterLabel>
+            <translation><!-- pick1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>pick2</masterLabel>
+            <translation><!-- pick2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>pick3</masterLabel>
+            <translation><!-- pick3 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Picklist Help Text --></help>
+        <label><!-- PicklistField6 --></label>
+        <name>PicklistField6__c</name>
+        <picklistValues>
+            <masterLabel>pick1</masterLabel>
+            <translation><!-- pick1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>pick2</masterLabel>
+            <translation><!-- pick2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Picklist Help Text --></help>
+        <label><!-- PicklistField7 --></label>
+        <name>PicklistField7__c</name>
+        <picklistValues>
+            <masterLabel>pick1</masterLabel>
+            <translation><!-- pick1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>pick2</masterLabel>
+            <translation><!-- pick2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Test Field --></label>
+        <name>TestField__c</name>
+    </fields>
+    <fields>
+        <help><!-- TextArea Help Text --></help>
+        <label><!-- TextAreaField5 --></label>
+        <name>TextAreaField5__c</name>
+    </fields>
+    <fields>
+        <help><!-- TextArea Help Text --></help>
+        <label><!-- TextAreaField6 --></label>
+        <name>TextAreaField6__c</name>
+    </fields>
+    <fields>
+        <help><!-- TextArea Help Text --></help>
+        <label><!-- TextAreaField7 --></label>
+        <name>TextAreaField7__c</name>
+    </fields>
+    <fields>
+        <help><!-- Text Field Help Text --></help>
+        <label><!-- TextField7 --></label>
+        <name>TextField7__c</name>
+    </fields>
+    <fields>
+        <label><!-- UrlField6 --></label>
+        <name>UrlField6__c</name>
+    </fields>
+    <fields>
+        <help><!-- Testing Url Field Help Text --></help>
+        <label><!-- UrlField7 --></label>
+        <name>UrlField7__c</name>
+    </fields>
+    <fields>
+        <help><!-- Email Help Text --></help>
+        <label><!-- 11 --></label>
+        <name>X11__c</name>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- DateTime Help Text --></help>
+        <label><!-- 22 --></label>
+        <name>X22__c</name>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Percent Help Text --></help>
+        <label><!-- 2 (in percent$ --></label>
+        <name>X2_in_percent__c</name>
+    </fields>
+    <fields>
+        <help><!-- Geolocation Help Text --></help>
+        <label><!-- 4 --></label>
+        <name>X4__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number Help Text --></help>
+        <label><!-- 5 --></label>
+        <name>X5__c</name>
+    </fields>
+    <fields>
+        <help><!-- Phone Help Text --></help>
+        <label><!-- meta1Test10 --></label>
+        <name>meta1Test10__c</name>
+    </fields>
+    <fields>
+        <help><!-- Mutlipicklist Help Text --></help>
+        <label><!-- meta1Test12 --></label>
+        <name>meta1Test12__c</name>
+        <picklistValues>
+            <masterLabel>pick1</masterLabel>
+            <translation><!-- pick1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>pick2</masterLabel>
+            <translation><!-- pick2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- TextArea Help Text --></help>
+        <label><!-- meta1Test13 --></label>
+        <name>meta1Test13__c</name>
+    </fields>
+    <fields>
+        <help><!-- Testing Long Text Area Help Text --></help>
+        <label><!-- meta1Test14 --></label>
+        <name>meta1Test14__c</name>
+    </fields>
+    <fields>
+        <help><!-- Testing Rich Text Field Help Text --></help>
+        <label><!-- meta1Test15 --></label>
+        <name>meta1Test15__c</name>
+        <relationshipLabel><!-- abc1 --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Testing Url Field Help Text --></help>
+        <label><!-- meta1Test16 --></label>
+        <name>meta1Test16__c</name>
+    </fields>
+    <fields>
+        <help><!-- Checkox Field Help Text --></help>
+        <label><!-- meta1Test1 --></label>
+        <name>meta1Test1__c</name>
+    </fields>
+    <fields>
+        <help><!-- Percent Help Text --></help>
+        <label><!-- meta1Test9 --></label>
+        <name>meta1Test9__c</name>
+    </fields>
+    <fields>
+        <help><!-- Text Field Help Text --></help>
+        <label><!-- meta1__Test2 --></label>
+        <name>meta1_Test2__c</name>
+    </fields>
+    <fields>
+        <help><!-- Currency Help Text --></help>
+        <label><!-- meta1&amp;*Test3 --></label>
+        <name>meta1_Test3__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

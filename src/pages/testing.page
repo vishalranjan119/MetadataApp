@@ -1,0 +1,40 @@
+<apex:page controller="sampleCon">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <apex:stylesheet value="{!URLFOR($Resource.SLDS202, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+            <apex:stylesheet value="{!URLFOR($Resource.DataTableNew,'DataTablesNew/media/css/jquery.dataTables.css')}"/>
+            <apex:stylesheet value="{!$Resource.dataTablesFixedHeadersCSS}"/>
+            <apex:includeScript value="{!$Resource.Jquery}"/>   
+            <apex:includeScript value="{!$Resource.JqueryDataTableJS}"/>
+            <apex:includeScript value="{!$Resource.dataTablesFixedHeadersMINJS}"/>  
+        </head>
+    <body>
+       <div style="slds">
+           
+        
+    <apex:form >
+        <apex:selectCheckboxes value="{!countries}">
+            <apex:selectOptions value="{!items}"/>
+        </apex:selectCheckboxes><br/>
+        <apex:commandButton value="Test" action="{!test}" rerender="out" status="status"/>
+    </apex:form>
+      <div class="slds"></div>
+    <apex:outputPanel id="out" >
+                    <div id="flsModalId" style="display:{!statu}">
+                        <div role="dialog" id ="boxId" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal--large slds-scrollable" aria-labelledby="header43">
+       
+        <apex:actionstatus id="status" startText="testing...">
+            <apex:facet name="stop">
+                <apex:outputPanel >
+                    <p>You have selected:</p>
+                    <apex:dataList value="{!countries}" var="c">{!c}</apex:dataList>
+                </apex:outputPanel>
+            </apex:facet>
+        </apex:actionstatus>
+               </div>
+        </div>
+    </apex:outputPanel>
+                        </div>
+  </body>
+    </html>
+</apex:page>

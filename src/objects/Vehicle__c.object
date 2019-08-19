@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Accessories__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Select all the visible accessories of the vehicle</inlineHelpText>
+        <label>Accessories</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value><fullName>Air Freshner</fullName><default>false</default><label>Air Freshner</label></value>
+                <value><fullName>Alloy Wheels</fullName><default>false</default><label>Alloy Wheels</label></value>
+                <value><fullName>GPS</fullName><default>false</default><label>GPS</label></value>
+                <value><fullName>Seat Covers</fullName><default>false</default><label>Seat Covers</label></value>
+                <value><fullName>Steering Wheel Cover</fullName><default>false</default><label>Steering Wheel Cover</label></value>
+                <value><fullName>Streo System</fullName><default>false</default><label>Streo System</label></value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Calculated_Performance_Depreciation__c</fullName>
+        <description>Performance Depriciation</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Percent Depriciation in vehicle performance</inlineHelpText>
+        <label>Calculated Performance Depreciation</label>
+        <precision>3</precision>
+        <required>true</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Chassis_Number__c</fullName>
+        <description>Chassis Number</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the Unique Vehicle Chassis Number</inlineHelpText>
+        <label>Chassis Number</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cost_of_Servicing__c</fullName>
+        <description>Total Cost of Servicing</description>
+        <externalId>false</externalId>
+        <label>Cost of Servicing</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Date_of_Purchase__c</fullName>
+        <description>Date of Purchase</description>
+        <externalId>false</externalId>
+        <label>Date of Purchase</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Dealer_Name__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Dealer&apos;s Name</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of the Dealer</inlineHelpText>
+        <label>Dealer Name</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Dealer</relationshipLabel>
+        <relationshipName>Dealer</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Dealer_s_Notes__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Note from dealer regarding the further mantainance</inlineHelpText>
+        <label>Dealer&apos;s Notes</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Details_of_Servicing__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>A link to the detail page of past and current services provided</inlineHelpText>
+        <label>Details of Servicing</label>
+        <length>15000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Is_Dealer_Same_as_Seller__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Check if the dealer is same as the seller</inlineHelpText>
+        <label>Is Dealer Same as Seller</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Online_Servicing_Details__c</fullName>
+        <externalId>false</externalId>
+        <label>Online Servicing Details</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Owner_s_Address__c</fullName>
+        <description>Owner&apos;s Address</description>
+        <displayLocationInDecimal>false</displayLocationInDecimal>
+        <externalId>false</externalId>
+        <label>Owner&apos;s Address</label>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Location</type>
+    </fields>
+    <fields>
+        <fullName>Owner_s_Email__c</fullName>
+        <description>Owner&apos;s Email</description>
+        <externalId>false</externalId>
+        <label>Owner&apos;s Email</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Owner_s_Mobile_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Owner&apos;s Mobile Number</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Servicing_Date__c</fullName>
+        <description>Date of Servicing</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Date and time when the servicing was completed.</inlineHelpText>
+        <label>Servicing Date</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Vehicle_Id__c</fullName>
+        <description>Vehicle&apos;s UID</description>
+        <externalId>false</externalId>
+        <inlineHelpText>UID as issued by Govt.</inlineHelpText>
+        <label>Vehicle Id</label>
+        <length>15</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Vehicle_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Vehicle Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value><fullName>Four Wheeler</fullName><default>false</default><label>Four Wheeler</label></value>
+                <value><fullName>Three Wheeler</fullName><default>false</default><label>Three Wheeler</label></value>
+                <value><fullName>Two Wheeler</fullName><default>false</default><label>Two Wheeler</label></value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Vehicle</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Vehicle Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Vehicles</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

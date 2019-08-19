@@ -1,0 +1,165 @@
+<apex:page sidebar="false" controller="CSVReader" id="entirePage">
+    
+    <apex:form >
+        
+        <apex:sectionHeader title="Upload data from CSV file"/>
+        <apex:messages />
+        <apex:pageBlock id="fileuploadscreen" >
+            <apex:pageBlockSection title="Upload CSV File">          
+                <center>
+                    <br/>
+                    <apex:pageBlockSectionItem >                
+                        <apex:inputFile value="{!contentFile}" fileName="{!nameFile}"/>
+                        <apex:commandButton value="Upload File" action="{!ReadFile}" id="theButton" style="width:70px;"  />
+                    </apex:pageBlockSectionItem>
+                </center>
+                <center>
+                    <apex:pageBlockSectionItem dataStyle="align:center;"> 
+                        <br/> <br/> <font color="red"> <b>Note: Please <a href="https://c.na30.content.force.com/servlet/servlet.FileDownload?file=01536000000WtCx" target="_blank">Click Here</a> to download standard template to Upload data.</b> </font>
+                    </apex:pageBlockSectionItem>
+                </center> 
+        </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:pageBlock rendered="{!NOT(ISNULL(dsList))}">
+            <apex:pageBlockSection title="Field To Create" id="refreshThis" columns="1">
+                <apex:pageBlockTable value="{!dsList}" var="ds" border="1px" id="table1">
+                    
+                    <apex:column value="{!ds.objectName}" headerValue="Object Name" width="50px"  />
+                    <apex:column value="{!ds.fieldType}" headerValue="Data Type" width="40px"/>
+                    
+                    <apex:column headerValue="Label" width="50px" >
+                        <apex:inputText value="{!ds.fieldLabel}" size="15" required="true"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Field Name" width="50px" >
+                        <apex:inputText value="{!ds.fieldName}" size="15" required="true"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Length" width="30px" >  
+                        <apex:inputText value="{!ds.length}" size="5" disabled="{!ISNULL(ds.length)}" required="true"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Decimal Places" width="40px">
+                        <apex:inputText value="{!ds.decimalPlace}" size="5" disabled="{!ISNULL(ds.decimalPlace)}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Visible Lines" width="30px">
+                        <apex:inputText value="{!ds.visibleLines}" size="5" disabled="{!ISNULL(ds.visibleLines)}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Picklist Value" width="50px">
+                        <apex:inputTextarea value="{!ds.picklistValue}" disabled="{!ISNULL(ds.picklistValue)}" required="true"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Picklist Sorted" width="30px">
+                        <apex:inputCheckbox value="{!ds.picklistSorted}" disabled="{!ISNULL(ds.picklistSortedCheck)}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Default Value" width="40px">
+                        <apex:inputText value="{!ds.fieldDefaultValue}" size="5" disabled="{!ISNULL(ds.fieldDefaultValue)}" />
+                    </apex:column>
+                    
+                    <apex:column headerValue="Required" width="30px">
+                        <apex:inputCheckbox value="{!ds.required}" disabled="{!ISNULL(ds.requiredCheck)}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Track Feed History" width="30px">
+                        <apex:inputCheckbox value="{!ds.trackFeedHistory }" />
+                    </apex:column>
+                    
+                    <apex:column headerValue="ExternalId" width="30px">
+                        <apex:inputCheckbox value="{!ds.externalId}" disabled="{!ISNULL(ds.externalIdCheck)}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Unique" width="30px">
+                        <apex:inputCheckbox value="{!ds.unique}" disabled="{!ISNULL(ds.uniqueCheck)}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Related To Object" width="30px" >
+                        <apex:inputText value="{!ds.relatedToObject}" disabled="{!ISNULL(ds.lookupFieldCheck)}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Child Relationship Name" width="50px" >
+                        <apex:inputText value="{!ds.childRelationshipName}" disabled="{!ISNULL(ds.lookupFieldCheck)}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Related List Label" width="50px">
+                        <apex:inputText value="{!ds.relatedListLabel}" disabled="{!ISNULL(ds.lookupFieldCheck)}"/>
+                    </apex:column> 
+                    
+                    <apex:column headerValue="Description" width="500">
+                        <apex:inputTextarea value="{!ds.Description}" />
+                    </apex:column>
+                    
+                    <apex:column headerValue="Help Text" width="500px">
+                        <apex:inputTextarea value="{!ds.helpText}" />
+                    </apex:column>
+                    
+                    <apex:column headerValue="Result" rendered="{!isCreateFieldCalled}">
+                        <apex:outputText value="{!ds.result}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Error Message" rendered="{!isCreateFieldCalled}">
+                        <apex:outputText value="{!ds.errorMsg}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Page Layout" width="300px">
+                        <c:MultiSelect id="mulPan1" leftLabel=""
+                            leftOption="{!ds.allOptionsForLayoutAssignment}"
+                            rightLabel=""
+                            rightOption="{!ds.selectedOptionsForLayoutAssignment}"
+                            size="10"
+                            width="auto"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Read Only" width="500px" id="readonlymultiselect">
+                        <c:MultiSelect id="mulPan" leftLabel=""
+                            leftOption="{!ds.allOptionsForReadOnly}"
+                            rightLabel=""
+                            rightOption="{!ds.selectedOptionsForReadOnly}"
+                            size="14"
+                            width="auto"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Visible" width="500px" id="visiblemultiselect">
+                        <c:MultiSelect id="mulPan2" leftLabel=""
+                            leftOption="{!ds.allOptionsForVisibleOnly}"
+                            rightLabel=""
+                            rightOption="{!ds.selectedOptionsForVisibleOnly}"
+                            size="14"
+                            width="auto"/>
+                    </apex:column>
+                                      
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>    
+            
+            <apex:pageBlockButtons rendered="{!NOT(ISNULL(dsList))}" >
+                <apex:commandButton action="{!createField}" value="Submit"/>
+                <!--apex:commandButton value="Add to all" action="{!createField}"/-->
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockButtons rendered="{!NOT(ISNULL(dsList))}" > 
+                <apex:commandButton action="{!applyReadonlyToAllProfiles}" value="Apply Readonly to all profiles"/>
+                
+                <!--apex:outputLabel value="ReadOnly: Apply same profiles for all">
+                <apex:inputCheckbox label="Apply to all profiles" value="{!checkboxStateForReadonly}">
+                        <apex:actionSupport event="onchange" action="{!applyReadonlyToAllProfiles}" reRender="readonlymultiselect"/>
+                </apex:inputCheckbox>
+                </apex:outputLabel-->
+                
+                <apex:commandButton action="{!applyVisibleToAllProfiles}" value="Apply Visible to all profiles"/>
+                <apex:commandLink value="+ click here to Add new Row " action="{!addNewRowInTable}" reRender="table1">
+             		
+                </apex:commandLink>
+                
+                <!--apex:outputLabel value="Visible: Apply same profiles for all">
+                <apex:inputCheckbox label="Apply to all profiles" value="{!checkboxStateForVisible}">
+                        <apex:actionSupport event="onchange" action="{!applyVisibleToAllProfiles}" reRender="visiblemultiselect"/>
+                </apex:inputCheckbox>
+                </apex:outputLabel-->
+                
+            </apex:pageBlockButtons>
+            
+        </apex:pageBlock>       
+    </apex:form>   
+</apex:page>

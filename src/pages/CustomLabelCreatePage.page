@@ -1,0 +1,170 @@
+<apex:page controller="CustomLabelControllers" sidebar="false">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <apex:stylesheet value="{!URLFOR($Resource.SLDS202, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+            <apex:includeScript value="{!$Resource.Jquery}"/>        
+            <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+            <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+            <script type="text/javascript">       
+                var $j = jQuery.noConflict();
+                $j(document).ready(function() {
+                    $j('input[type="file"]').change(function(e){
+                        var fileName = e.target.files[0].name;
+                        console.log(fileName);
+                        $j("#upload_file").text(fileName);
+                    });
+                });
+            </script>
+        
+            <style type="text/css">
+                #container {
+                    width: 500px;
+                    height: 90px;
+                    position: relative;
+                    border:2px grey;
+                    text-align: center;
+                    vertical-align: middle;
+                    line-height: 90px;
+                    border-style:dashed;
+                    margin-bottom:5px;
+                }
+                #navi,#infoi,#infoi1 {
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                }
+                #infoi {
+                    z-index: 10;
+                }
+                .inputfile{
+                    width:100%; 
+                    height:100%; 
+                    opacity:0;
+                }
+                
+            </style>
+        </head>
+     
+           
+            
+
+        <body>
+             <apex:form styleClass="slds">
+                <apex:actionFunction name="previewData" action="{!previewData}" />
+        		<apex:inputHidden id="jsonString" value="{!myString}"/>
+                <div class="slds-page-header" role="banner" style="background-color:#005FB2">
+                  <div class="slds-media slds-media--center">
+                    <div class="slds-media__figure">
+                      <svg aria-hidden="true" class="slds-icon slds-icon-standard-home">
+                        <use xlink:href="{!URLFOR($Resource.SLDS202, 'assets/icons/standard-sprite/svg/symbols.svg#home')}"></use>
+                      </svg>
+                    </div>
+                    <div class="slds-media__body">
+                      <p class="slds-page-header__title slds-truncate slds-align-middle" title="Upload data from Excel file" style="color:#ffffff">
+                          Upload data from Excel file 
+                      </p>      
+                    </div>
+                  </div>
+                </div>              
+                <apex:pagemessages />
+                
+                <div id="div1">
+                    <div align="center" style="padding-top:10px">
+                        <div id="container">
+                            <div id="navi" style="font-size:large;color:grey;">
+                                <apex:image style="height:50px" url="{!URLFOR($Resource.images, 'images/upload.gif')}"/>
+                                Drag file Here or click to upload
+                            </div>
+                            
+                            <div id = "infoi">
+                               <input type="file" name="xlfile" id="xlf" class="inputfile"/>
+                            </div>
+                            
+                        </div>
+                
+                        <apex:commandButton value="Upload File" id="theButton" action="{!ReadFile}" styleClass="slds-button slds-button--neutral" />                
+                        <apex:commandLink value="Skip" action="{!onSkip}" styleClass="slds-button slds-button--neutral"/>
+                
+                        <span id="upload_file"></span>
+                    </div>
+                    <div align="center">
+                        <font color="red"> <b>Note: Please <apex:outputLink value="{!URLFOR($Resource.StandardFormat_CustomLabels, 'StandardFormat_CustomLabels.xlsx')}">Click Here</apex:outputLink> to download standard template to Upload data.</b> </font>
+                    </div>
+                    
+                </div>
+               	<div class = "panel-body" >
+                    <pre id="out" style="display:none" >
+                    </pre>
+        		</div>
+                
+           	
+            </apex:form>
+            
+           <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-shim.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+            </script>
+        <script>
+            var X = XLSX;
+            
+            function fixdata(data) {
+                var o = "", l = 0, w = 10240;
+                for(; l<data.byteLength/w; ++l) o+=String.fromCharCode.apply(null,new Uint8Array(data.slice(l*w,l*w+w)));
+                o+=String.fromCharCode.apply(null, new Uint8Array(data.slice(l*w)));
+                return o;
+            }
+            
+            function to_json(workbook) {
+                var result = {};
+                workbook.SheetNames.forEach(function(sheetName) {
+                    var roa = X.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                    if(roa.length > 0){
+                        result[sheetName] = roa;
+                    }
+                });
+                return result;
+            }
+            	
+            function process_wb(wb) {
+                var output = JSON.stringify(to_json(wb), 2, 2);
+                if(out.innerText === undefined) out.textContent = output;
+                  else out.innerText = output;
+                
+                if(typeof console !== 'undefined') console.log("output", new Date());
+            }
+            var xlf = document.getElementById('xlf');
+            function handleFile(e) {
+                
+                var files = e.target.files;
+                var f = files[0];
+                {
+                    var reader = new FileReader();
+                    var name = f.name;
+                    reader.onload = function(e) {
+                        var data = e.target.result;
+                            var arr = fixdata(data);
+                            var wb =  X.read(btoa(arr), {type: 'base64'});
+                            process_wb(wb);
+                        
+    						document.getElementById('j_id0:j_id5:jsonString').value= document.getElementById('out').innerText;    
+                        //debugger
+                        //previewData();
+                    };
+                    console.log("slslslslls");
+                    reader.readAsArrayBuffer(f);
+                }
+                console.log("asfdsaf");
+                return false;
+            }
+       
+            if(xlf.addEventListener) xlf.addEventListener('change', handleFile, false);
+            </script>
+       </body>
+    </html>
+</apex:page>

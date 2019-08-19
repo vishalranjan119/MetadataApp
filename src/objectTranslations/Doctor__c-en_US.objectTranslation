@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Doctor</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Doctors</value>
+    </caseValues>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Account__c</name>
+        <relationshipLabel><!-- Doctors --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Additional Specialities --></label>
+        <name>Additional_Specialities__c</name>
+        <picklistValues>
+            <masterLabel>&quot;Surgery</masterLabel>
+            <translation><!-- &quot;Surgery --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Address --></label>
+        <name>Address__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the number of the parking assigned to the doctor in hospital permises --></help>
+        <label><!-- Assigned Parking --></label>
+        <name>Assigned_Parking__c</name>
+    </fields>
+    <fields>
+        <help><!-- &quot;A complete Bio Data of the doctor --></help>
+        <label><!-- Bio --></label>
+        <name>Bio__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the UrL of the blog (if any) published by the doctor. --></help>
+        <label><!-- Blog --></label>
+        <name>Blog__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the UrL of the blog (if any) published by the doctor. --></help>
+        <label><!-- Blog@*^*&amp;!%new --></label>
+        <name>Blog_new__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the percent of commission assigned to the doctor per addmission --></help>
+        <label><!-- Comission per Addmission --></label>
+        <name>Comission_per_Addmission__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the date of birth --></help>
+        <label><!-- Date of Birth --></label>
+        <name>Date_of_Birth__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the Doctor&apos;s Date of joining --></help>
+        <label><!-- Date of Joining --></label>
+        <name>Date_of_Joining__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the official Email address --></help>
+        <label><!-- Email --></label>
+        <name>Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fixed Salary --></label>
+        <name>Fixed_Salary__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gender --></label>
+        <name>Gender__c</name>
+        <picklistValues>
+            <masterLabel>&quot;Male</masterLabel>
+            <translation><!-- &quot;Male --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Mobile Number --></label>
+        <name>Mobile_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the doctor&apos;s name with salutation --></help>
+        <label><!-- Name --></label>
+        <name>Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the area the doctor primarily specializes in --></help>
+        <label><!-- Primary Speciality --></label>
+        <name>Primary_Speciality__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check if the doctor is a residence. --></help>
+        <label><!-- Residence --></label>
+        <name>Residence__c</name>
+    </fields>
+    <fields>
+        <help><!-- A short description of the doctor as appears on the website --></help>
+        <label><!-- Short Description --></label>
+        <name>Short_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- encry --></label>
+        <name>encry__c</name>
+    </fields>
+    <fields>
+        <label><!-- location2 --></label>
+        <name>location2__c</name>
+    </fields>
+    <fields>
+        <label><!-- locationnnnnnnnnn --></label>
+        <name>locationnnnnnnnnn__c</name>
+    </fields>
+    <fields>
+        <label><!-- multiselect picklist --></label>
+        <name>multiselect_picklist__c</name>
+        <picklistValues>
+            <masterLabel>A</masterLabel>
+            <translation><!-- A --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>B</masterLabel>
+            <translation><!-- B --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>C</masterLabel>
+            <translation><!-- C --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- rich --></label>
+        <name>rich__c</name>
+    </fields>
+    <fields>
+        <label><!-- test2 --></label>
+        <name>test2__c</name>
+    </fields>
+    <fields>
+        <label><!-- test --></label>
+        <name>test__c</name>
+    </fields>
+    <layouts>
+        <layout>Doctor Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Vehicle</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Vehicles</value>
+    </caseValues>
+    <fields>
+        <help><!-- Select all the visible accessories of the vehicle --></help>
+        <label><!-- Accessories --></label>
+        <name>Accessories__c</name>
+        <picklistValues>
+            <masterLabel>Air Freshner</masterLabel>
+            <translation><!-- Air Freshner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Alloy Wheels</masterLabel>
+            <translation><!-- Alloy Wheels --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GPS</masterLabel>
+            <translation><!-- GPS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Seat Covers</masterLabel>
+            <translation><!-- Seat Covers --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Steering Wheel Cover</masterLabel>
+            <translation><!-- Steering Wheel Cover --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Streo System</masterLabel>
+            <translation><!-- Streo System --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Percent Depriciation in vehicle performance --></help>
+        <label><!-- Calculated Performance Depreciation --></label>
+        <name>Calculated_Performance_Depreciation__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the Unique Vehicle Chassis Number --></help>
+        <label><!-- Chassis Number --></label>
+        <name>Chassis_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cost of Servicing --></label>
+        <name>Cost_of_Servicing__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date of Purchase --></label>
+        <name>Date_of_Purchase__c</name>
+    </fields>
+    <fields>
+        <help><!-- Name of the Dealer --></help>
+        <label><!-- Dealer Name --></label>
+        <name>Dealer_Name__c</name>
+        <relationshipLabel><!-- Dealer --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Note from dealer regarding the further mantainance --></help>
+        <label><!-- Dealer&apos;s Notes --></label>
+        <name>Dealer_s_Notes__c</name>
+    </fields>
+    <fields>
+        <help><!-- A link to the detail page of past and current services provided --></help>
+        <label><!-- Details of Servicing --></label>
+        <name>Details_of_Servicing__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check if the dealer is same as the seller --></help>
+        <label><!-- Is Dealer Same as Seller --></label>
+        <name>Is_Dealer_Same_as_Seller__c</name>
+    </fields>
+    <fields>
+        <label><!-- Online Servicing Details --></label>
+        <name>Online_Servicing_Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Owner&apos;s Address --></label>
+        <name>Owner_s_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Owner&apos;s Email --></label>
+        <name>Owner_s_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Owner&apos;s Mobile Number --></label>
+        <name>Owner_s_Mobile_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- Date and time when the servicing was completed. --></help>
+        <label><!-- Servicing Date --></label>
+        <name>Servicing_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- UID as issued by Govt. --></help>
+        <label><!-- Vehicle Id --></label>
+        <name>Vehicle_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vehicle Type --></label>
+        <name>Vehicle_Type__c</name>
+        <picklistValues>
+            <masterLabel>Four Wheeler</masterLabel>
+            <translation><!-- Four Wheeler --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Three Wheeler</masterLabel>
+            <translation><!-- Three Wheeler --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Two Wheeler</masterLabel>
+            <translation><!-- Two Wheeler --></translation>
+        </picklistValues>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,39 @@
+<apex:page controller="BulkFieldDeletorController">
+    <apex:form >
+    	<apex:pageBlock >
+            <apex:pageBlockSection >
+                <apex:selectList title="Object Name" label="Object Name" value="{!selectedObject}" size="1">
+                    <apex:selectOptions value="{!objNames}">
+                    </apex:selectOptions>
+                </apex:selectList>
+                <apex:outputText label="Selected Object:" value="{!selectedObject}" id="RefreshObject"></apex:outputText>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="{!pageBlockSectionTitle}" columns="1">
+                
+                <apex:pageBlockTable value="{!dsList}" var="ds" id="RefreshTable">
+                    <apex:column >
+                        <apex:inputCheckbox value="{!ds.isDeletable}" rendered="{!NOT(isgetdsListCalled)}"/>
+                    </apex:column>
+                    <apex:column value="{!ds.fieldLabel}" headerValue="Field Label" />
+                    <apex:column value="{!ds.fieldName}" headerValue="Field Name"/>
+                    <apex:column value="{!ds.fieldType}" headerValue="Field Type"/>
+                    <apex:column headerValue="Unique" rendered="{!NOT(isgetdsListCalled)}">
+                        <apex:inputCheckbox value="{!ds.unique}" disabled="true"/>
+                    </apex:column>
+                    
+                     <apex:column headerValue="ExternalId" rendered="{!NOT(isgetdsListCalled)}">
+                        <apex:inputCheckbox value="{!ds.externalId}" disabled="true" />
+                    </apex:column>
+                    <apex:column value="{!ds.result}" headerValue="Result" rendered="{!isgetdsListCalled}"/>
+
+                </apex:pageBlockTable>  
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                    <apex:commandButton action="{!createDataStructur}" value="AccessFields" />
+                    <apex:commandButton action="{!deleteSelectedField}" value="Delete" disabled="{!(isgetdsListCalled)}"/>
+            </apex:pageBlockButtons>
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Translations xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customApplications>
+        <label><!-- Force.com --></label>
+        <name>Force_com</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- MetadataApp --></label>
+        <name>MetadataApp</name>
+    </customApplications>
+    <customLabels>
+        <label><!-- Character --></label>
+        <name>Char</name>
+    </customLabels>
+    <customLabels>
+        <label>你好</label>
+        <name>Hello</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Number --></label>
+        <name>Int</name>
+    </customLabels>
+    <customLabels>
+        <label>手机</label>
+        <name>Mobiles</name>
+    </customLabels>
+    <customLabels>
+        <label>测试</label>
+        <name>Testing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- the process of translating words or text from one language into another. --></label>
+        <name>Translations</name>
+    </customLabels>
+    <customTabs>
+        <label><!-- Bulk Create Field --></label>
+        <name>Bulk_Create_Field</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Bulk Field Deletor --></label>
+        <name>Bulk_Field_Deletor</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Bulk Field Updator --></label>
+        <name>Bulk_Field_Updator</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Custom Label Creator --></label>
+        <name>Custom_Label_Creator</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Custom Label Deletor --></label>
+        <name>Custom_Label_Deletor</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Switch --></label>
+        <name>Switch</name>
+    </customTabs>
+    <quickActions>
+        <label><!-- LogACall --></label>
+        <name>LogACall</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewAccount --></label>
+        <name>NewAccount</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewCase --></label>
+        <name>NewCase</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewContact --></label>
+        <name>NewContact</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewEvent --></label>
+        <name>NewEvent</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewGroup --></label>
+        <name>NewGroup</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewLead --></label>
+        <name>NewLead</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewNote --></label>
+        <name>NewNote</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewOpportunity --></label>
+        <name>NewOpportunity</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewTask --></label>
+        <name>NewTask</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- SendEmail --></label>
+        <name>SendEmail</name>
+    </quickActions>
+</Translations>

@@ -1,0 +1,64 @@
+<apex:page controller="CSVReader" id="page" showHeader="false" Sidebar="false" cache="true" expires="1200" contentType="application/vnd.ms-excel#Success.xls" >
+    <!-- Schema added to add autofilter for header row in Excel sheet -->
+    <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+        <head></head> 
+        <body style="width:100%;border:1px solid #DFECEC;"> 
+          <!--  <apex:pageBlock id="results" >-->
+                <!-- HTML Table used to display Candidate Data in Excel Sheet with Grid Lines -->
+                <table border="1" cellpadding="1" cellspacing="0" style="width:100%;border:1px solid #000000;font-familyans-serif;font-size:10px">
+                    
+                    <tr style="font-family:verdana;color:Black;font-size:12px;height=18px;width:100%" >  
+                        <td x:autofilter='all' style="background-color: #DAFFFF" ><b><apex:outputText value="Object Name"/></b> </td>
+                        <td x:autofilter='all' style="background-color: #DAFFFF" ><b><apex:outputText value="Data Type"/></b> </td> 
+                        <td x:autofilter='all' style="background-color: #DAFFFF" ><b><apex:outputText value="Label"/></b> </td>
+                        <td x:autofilter='all' style="background-color: #DAFFFF" ><b><apex:outputText value="Field Name"/></b> </td> 
+                        <td x:autofilter='all' style="background-color: #DAFFFF" ><b><apex:outputText value="Length"/></b> </td>
+                        <td x:autofilter='all' style="background-color: #DAFFFF" ><b><apex:outputText value="Decimal Places"/></b> </td> 
+                        <td x:autofilter='all' style="background-color: #DAFFFF" ><b><apex:outputText value="Visible Lines"/></b> </td>
+                        <td x:autofilter='all' style="background-color: #DAFFFF" ><b><apex:outputText value="Picklist Values"/></b> </td> 
+                        <td x:autofilter='all' style="background-color: #DAFFFF" ><b><apex:outputText value="Picklist Sorted"/></b> </td>
+                        <td x:autofilter='all' style="background-color: #DAFFFF" ><b><apex:outputText value="Default Value"/></b> </td>
+                        <td x:autofilter='all' style="background-color: #DAFFFF" ><b><apex:outputText value="Required"/></b> </td>
+                        <td x:autofilter='all' style="background-color: #DAFFFF" ><b><apex:outputText value="Track Feed History"/></b> </td>
+                        <td x:autofilter='all' style="background-color: #DAFFFF" ><b><apex:outputText value="ExternalId"/></b> </td>
+                        <td x:autofilter='all' style="background-color: #DAFFFF" ><b><apex:outputText value="Unique"/></b> </td>
+                        <td x:autofilter='all' style="background-color: #DAFFFF" ><b><apex:outputText value="Related To Object"/></b> </td>
+                        <td x:autofilter='all' style="background-color: #DAFFFF" ><b><apex:outputText value="Child Relationship Name"/></b> </td>
+                        <td x:autofilter='all' style="background-color: #DAFFFF" ><b><apex:outputText value="Related List Label"/></b> </td>
+                        <td x:autofilter='all' style="background-color: #DAFFFF" ><b><apex:outputText value="Description"/></b> </td>
+                        <td x:autofilter='all' style="background-color: #DAFFFF" ><b><apex:outputText value="Help Text"/></b> </td>
+                        <td x:autofilter='all' style="background-color: #DAFFFF" ><b><apex:outputText value="Result"/></b> </td>
+               <!--         <td x:autofilter='all' style="background-color: #DAFFFF" rendered="{!isDownloadSuccessFile}"><b><apex:outputText value="Result" rendered="{!isDownloadSuccessFile}"/></b> </td> -->
+                    </tr> 
+                    
+                    <apex:repeat value="{!successList}" var="ds" id="theRepeat"> 
+                        <tr border="1" style="font-family:verdana;color:Black;font-size:12px;width:100%" > 
+                            <td><apex:outputText value="{!ds.objectName}"/></td>
+                            <td ><apex:outputText value="{!ds.fieldType}"/></td> 
+                            <td><apex:outputText value="{!ds.fieldLabel}"/></td> 
+                            <td ><apex:outputText value="{!ds.fieldName}"/></td> 
+                            <td><apex:outputText value="{!ds.length}"/></td>
+                            <td ><apex:outputText value="{!ds.decimalPlace}"/></td> 
+                            <td><apex:outputText value="{!ds.visibleLines}"/></td> 
+                            <td ><apex:outputText value="{!ds.picklistValue}"/></td> 
+                            <td><apex:outputText value="{!ds.picklistSortedCheck}"/></td>
+                            <td ><apex:outputText value="{!ds.fieldDefaultValue}"/></td> 
+                            <td><apex:outputText value="{!ds.requiredCheck}"/></td>
+                            <td><apex:outputText value="{!ds.trackFeedHistory}"/></td>
+                            <td ><apex:outputText value="{!ds.externalId}"/></td> 
+                            <td><apex:outputText value="{!ds.unique}"/></td> 
+                            <td ><apex:outputText value="{!ds.relatedToObject}"/></td> 
+                            <td><apex:outputText value="{!ds.childRelationshipName}"/></td>
+                            <td><apex:outputText value="{!ds.relatedListLabel}"/></td> 
+                            <td ><apex:outputText value="{!ds.Description}"/></td> 
+                            <td><apex:outputText value="{!ds.helpText}"/></td>
+                            <td><apex:outputText value="{!ds.result}"/></td>
+                           <!-- <td rendered="{!isDownloadSuccessFile}"><apex:outputText value="{!ds.result}" rendered="{!isDownloadSuccessFile}"/></td>	-->
+                        </tr>
+                    </apex:repeat> 
+                    
+                </table>
+         <!--   </apex:pageBlock>-->
+        </body >
+    </html>
+</apex:page>

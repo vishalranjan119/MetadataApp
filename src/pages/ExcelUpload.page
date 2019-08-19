@@ -1,0 +1,132 @@
+<apex:page showHeader="true" controller="ExcelUploadController" apiVersion="36.0"> 
+    <head>
+        <title>IMPORT EXCEL DATA</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <style type="text/css">            
+            .btn1,.btn1:hover{text-decoration:none}.upload-drop-zone{height:200px;border-width:2px;margin-bottom:20px;color:#ccc;border-style:dashed;border-color:#ccc;line-height:200px;text-align:center}body{background-color:#f3f5f6}.upload-drop-zone.drop{color:#222;border-color:#222}.tooltip-inner{text-align:center;-webkit-border-radius:0;-moz-border-radius:0;border-radius:4px;margin-bottom:6px;border:1px solid #ffd37f;background-color:#fffcdd;font-size:14px;color:#333;min-width:200px}.footer{left:0;bottom:0;width:100%;padding:2em;background-color:#f3f5f6;border-top:1px solid #fff;z-index:2;text-align:right;box-sizing:border-box;box-shadow:0 0 12px 0 rgba(0,0,0,.15);font-size:.9em}.btn1{background:#3498db;background-image:-webkit-linear-gradient(top,#3498db,#2980b9);background-image:-moz-linear-gradient(top,#3498db,#2980b9);background-image:-ms-linear-gradient(top,#3498db,#2980b9);background-image:-o-linear-gradient(top,#3498db,#2980b9);background-image:linear-gradient(to bottom,#3498db,#2980b9);-webkit-border-radius:4;-moz-border-radius:4;border-radius:4px;color:#fff;padding:10px 20px}.btn1:hover{background:#3cb0fd;background-image:-webkit-linear-gradient(top,#3cb0fd,#3498db);background-image:-moz-linear-gradient(top,#3cb0fd,#3498db);background-image:-ms-linear-gradient(top,#3cb0fd,#3498db);background-image:-o-linear-gradient(top,#3cb0fd,#3498db);background-image:linear-gradient(to bottom,#3cb0fd,#3498db)}
+        </style>
+        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    </head>
+    <apex:sectionHeader title="Import Data"
+                      subtitle="Excel file upload"/>
+    <apex:form >
+        <apex:actionFunction name="previewData" action="{!previewData}" rerender="previewPanel"/>
+        <apex:inputHidden id="jsonString" value="{!myString}"/>
+        <apex:pagemessages />
+    	<apex:pageBlock title="Accounts">
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton action="{!insertData}" value="Start Import"
+                                    styleClass="btn"/>
+            </apex:pageBlockButtons>
+            <apex:outputLabel > Select file from your computer
+            </apex:outputLabel>
+            <apex:outputPanel >
+                <div class="form-inline pull-right">
+                  <div class="form-group">
+                    <input type="file" name="xlfile" id="xlf"/>
+                  </div>
+                </div>
+            </apex:outputPanel>
+        </apex:pageBlock>
+        <div class = "panel-body">
+            <pre id="out">
+			</pre>
+        </div>
+        <div id="contentLoading" style="display:none;">
+            <div style="text-align: center;">
+                <img src="/img/loading.gif" alt="Loading graphic" />
+            </div>
+        </div>
+    </apex:form>
+    <apex:outputPanel id="previewPanel">
+        <apex:pageBlock id="dataPreview" rendered="{!status}">
+            <b>--- Top Account records ---</b>
+            <apex:dynamicComponent componentValue="{!table}"/>
+        </apex:pageBlock>
+    </apex:outputPanel>
+    <body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-shim.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+            </script>
+        <script>
+            var X = XLSX;
+            
+            function fixdata(data) {
+                var o = "", l = 0, w = 10240;
+                for(; l<data.byteLength/w; ++l) o+=String.fromCharCode.apply(null,new Uint8Array(data.slice(l*w,l*w+w)));
+                o+=String.fromCharCode.apply(null, new Uint8Array(data.slice(l*w)));
+                return o;
+            }
+            
+            function to_json(workbook) {
+                var result = {};
+                workbook.SheetNames.forEach(function(sheetName) {
+                    var roa = X.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                    if(roa.length > 0){
+                        result[sheetName] = roa;
+                    }
+                });
+                return result;
+            }
+            	
+            function process_wb(wb) {
+                var output = JSON.stringify(to_json(wb), 2, 2);
+                if(out.innerText === undefined) out.textContent = output;
+                  else out.innerText = output;
+                
+                if(typeof console !== 'undefined') console.log("output", new Date());
+            }
+            var xlf = document.getElementById('xlf');
+            function handleFile(e) {
+                loading(true);
+                var files = e.target.files;
+                var f = files[0];
+                {
+                    var reader = new FileReader();
+                    var name = f.name;
+                    reader.onload = function(e) {
+                        var data = e.target.result;
+                            var arr = fixdata(data);
+                            var wb =  X.read(btoa(arr), {type: 'base64'});
+                            process_wb(wb);
+                        	document.getElementById('j_id0:j_id3:jsonString').value= document.getElementById('out').innerText;
+                            previewData();
+                        	waitForIt();
+                    };
+                    reader.readAsArrayBuffer(f);
+                }
+                return false;
+            }
+        function waitForIt(){
+            if (document.getElementById('j_id0:dataPreview')) {
+                loading(false);
+            } else {
+                setTimeout(function(){waitForIt()},1000);
+            };
+        }
+        function loading(val) {
+            if (val) {
+                document.getElementById('contentLoading').style.display = 'block';
+                document.getElementById('out').style.display = 'none';
+                if(document.getElementById('j_id0:dataPreview')){
+                    document.getElementById('j_id0:dataPreview').style.display = 'none';
+                }
+            }
+            else {
+                document.getElementById('contentLoading').style.display = 'none';
+                document.getElementById('out').style.display = 'none';
+                if(document.getElementById('j_id0:dataPreview')){
+                    document.getElementById('j_id0:dataPreview').style.display = 'block';
+                }
+            }
+        }
+            if(xlf.addEventListener) xlf.addEventListener('change', handleFile, false);
+            </script>
+    </body>
+</apex:page>

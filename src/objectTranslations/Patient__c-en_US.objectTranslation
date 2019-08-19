@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Patient</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Patients</value>
+    </caseValues>
+    <fields>
+        <help><!-- Select the additional facilities availed by the Patient --></help>
+        <label><!-- Additional Facilities --></label>
+        <name>Additional_Facilities__c</name>
+        <picklistValues>
+            <masterLabel>Clothes</masterLabel>
+            <translation><!-- Clothes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Syringe</masterLabel>
+            <translation><!-- Syringe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Thermometer</masterLabel>
+            <translation><!-- Thermometer --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- &quot;Enter the Date of time of Addmission if available --></help>
+        <label><!-- Addmision Date Time --></label>
+        <name>Addmision_Date_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Bill Amount --></label>
+        <name>Current_Bill_Amount__c</name>
+    </fields>
+    <fields>
+        <help><!-- &quot;Enter the Date of time of discharge if available --></help>
+        <label><!-- Discharge Date Time --></label>
+        <name>Discharge_Date_Time__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the total discount availed in percentage --></help>
+        <label><!-- Discount --></label>
+        <name>Discount__c</name>
+    </fields>
+    <fields>
+        <label><!-- Doctor&apos;s Notes --></label>
+        <name>Doctor_s_Notes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Gender --></label>
+        <name>Gender__c</name>
+        <picklistValues>
+            <masterLabel>Female</masterLabel>
+            <translation><!-- Female --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Male</masterLabel>
+            <translation><!-- Male --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Others</masterLabel>
+            <translation><!-- Others --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Enter the location of the hospital where the patient is receiving treatment --></help>
+        <label><!-- Hospital --></label>
+        <name>Hospital__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the invoice number of the patient --></help>
+        <label><!-- Patient Invoice Number --></label>
+        <name>Patient_Invoice_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- Details of patients treatment history --></help>
+        <label><!-- Patient Treatment History --></label>
+        <name>Patient_Treatment_History__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the relation between the attendee and the patient --></help>
+        <label><!-- Relation --></label>
+        <name>Relation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Relative&apos;s Email --></label>
+        <name>Relative_s_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Relative&apos;s Mobile Number --></label>
+        <name>Relative_s_Mobile_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the name of the relative attending the patient --></help>
+        <label><!-- Relative&apos;s Name --></label>
+        <name>Relative_s_Name__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

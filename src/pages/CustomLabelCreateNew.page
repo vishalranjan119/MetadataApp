@@ -1,0 +1,255 @@
+<apex:page controller="CustomLabelControllers" sidebar="false">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <apex:stylesheet value="{!URLFOR($Resource.SLDS202, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+            <apex:stylesheet value="{!URLFOR($Resource.DataTableNew,'DataTablesNew/media/css/jquery.dataTables.css')}"/>
+            <apex:stylesheet value="{!$Resource.dataTablesFixedHeadersCSS}"/>
+            <apex:includeScript value="{!$Resource.Jquery}"/>   
+            <apex:includeScript value="{!$Resource.JqueryDataTableJS}"/>
+            <apex:includeScript value="{!$Resource.dataTablesFixedHeadersMINJS}"/>            
+            <script type="text/javascript">  
+            function hideModal(){
+                document.getElementById("modalId").style.display = "none";
+                return false;
+            }
+            var $j = jQuery.noConflict();    
+            $j(document).ready(function() {
+                $j("#reviewPage").div{
+                    var row={};
+                    var rows = [];
+                    $j("#table1 tbody tr").each( function () {
+                        //var rowId = $j(this).attr("id");
+                        //var value= $j(this).find('#'+rowId+'_fieldName input').val();
+                       console.log($j(this))
+                        //fieldName.push(value);
+                    });
+                    
+                    $j("#modalId").show();
+                    
+                    return false;
+                });
+                  $j('#table1').DataTable({
+                    ordering: false,
+                    searching: false,
+                    fixedHeader: true,
+                    paging: false
+                });  
+            });  
+            </script>
+            
+            <style type="text/css">  
+                .red{ 
+                color: red; background: pink; 
+                }
+                .commonChanges{
+                
+                }
+                .headerText{
+                text-align: center;
+                font-weight: bold;
+                }
+                .inputTextBox{
+                box-shadow: 1px 1px 1px #888888; 
+                background-color: #FFFF99;
+                }
+                .columnWidthAuto{
+                width: auto;
+                }
+                .inputTextArea{
+                box-shadow: 1px 1px 1px #888888; 
+                background-color: #FFFF99;
+                border: 3px double #CCCCCC;
+                font-family:tahoma, arial, sans-serif;
+                }
+                .columnWidthMinimum{
+                width: 90px;
+                }
+                .checkboxStyle{
+                display:inline-block; 
+                width:19px; 
+                height:19px; 
+                margin:-1px 4px 0 0; 
+                vertical-align:middle; 
+                cursor:pointer;
+                }
+                .slds .slds-text-link--reset {
+                cursor: text;
+                }
+                .slds .slds-table th {
+                font-weight: bolder;
+                }
+                .slds .slds-table th {
+                font-weight: bolder;
+                }
+                .slds img{
+                height: 20px;
+                }               
+            </style>
+        </head>
+        <body>
+            <div class="se-pre-con"></div>
+            <apex:form id="frm1" styleClass="slds">                
+                <div class="slds-page-header" role="banner" style="background-color:#005FB2">
+                    <div class="slds-media slds-media--center">
+                        <div class="slds-media__figure">
+                            <svg aria-hidden="true" class="slds-icon">
+                                <use xlink:href="{!URLFOR($Resource.SLDS202, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+                            </svg>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__title slds-truncate slds-align-middle" title="Here is your Data, Let's have a look!" style="color:#ffffff">
+                                Here is your Data, Let's have a look ! 
+                            </p>      
+                        </div>
+                    </div>
+                </div>                
+                
+                <div class="slds-page-header" role="banner">
+                    <div class="slds-grid">    
+                        <div class="slds-col slds-no-flex slds-grid slds-align-bottom">      
+                            <div class="slds-button-group" role="group" style="padding:10px">
+                               
+                                <apex:commandButton styleClass="slds-button slds-button--neutral"  action="{!validate}" value="Create"  style="margin:10px; height:35px; width:100px; border-radius: 5px"/>
+                                <apex:commandButton styleClass="slds-button slds-button--neutral"  action="{!goToMainPage}" value="Cancel"  style="margin:10px; height:35px; width:100px; border-radius: 5px"/>
+                                <div id="reviewPage"></div>
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+                
+                <apex:pagemessages />
+                <!--apex:outputPanel id="datatable"-->
+                <!--div-->
+                <table id="table1" class="slds-table slds-table--bordered" cellspacing="0" >
+                    <thead>
+                        <tr class="slds-text-heading--label"> 
+                            <th class="slds-is-sortable slds-is-resizable" scope="col">
+                                    <div class="slds-th__action slds-text-link--reset"><span class="slds-truncate" title=""></span></div>
+                                </th>
+                            <th class="slds-is-sortable slds-is-resizable" scope="col">
+                                    <div class="slds-th__action slds-text-link--reset"><span class="slds-truncate" title="S.No.">S.No.</span></div>
+                                </th>
+                            <apex:repeat value="{!tableHeaders}" var="th">
+                                <th class="slds-is-sortable slds-is-resizable" scope="col">
+                                    <div class="slds-th__action slds-text-link--reset"><span class="slds-truncate" title="{!th}">{!th}</span></div>
+                                </th>
+                            </apex:repeat>    
+                            <apex:repeat value="{!translationsName}" var="th">
+                                <th class="slds-is-sortable slds-is-resizable" scope="col">
+                                    <div class="slds-th__action slds-text-link--reset"><span class="slds-truncate" title="{!th}">{!th}</span></div>
+                                </th>
+                            </apex:repeat> 
+                        </tr>
+                    </thead>                            
+                    <tbody>                                
+                        <apex:variable value="1" var="rowNum"/>
+                        <apex:repeat value="{!getData}" var="ds">
+                            <tr id="row_{!rowNum}" class="slds-hint-parent">
+                                <td class="slds-truncate" scope="row">
+                                    <apex:commandLink value="Del" action="{!onClickDelete}">
+                                        <apex:param name="index" value="{!rowNum}"/>
+                                    </apex:commandLink>
+                                </td>
+                                <td class="slds-truncate" scope="row"><apex:outputtext value="{!rowNum}"/></td>
+                                <td class="slds-truncate" scope="row"><apex:inputText value="{!ds.shortDesc}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')}; border-style: solid;  border-left-color:#FF5555; border-left-width:5px;"/></td>
+                                <td class="slds-truncate" scope="row"><apex:inputText value="{!ds.labelName}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')}; border-style: solid;  border-left-color:#FF5555; border-left-width:5px;"/></td>
+                                <td class="slds-truncate" scope="row"><apex:inputCheckbox value="{!ds.labelProt}"  styleClass="columnWidthMinimum checkboxStyle" style="background-color:{!IF(ds.errorMap[12],'#FFE5E5','#FFFF99')}"/></td>
+                                <td class="slds-truncate" scope="row"><apex:inputText value="{!ds.categories}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')};"/></td>
+                                <td class="slds-truncate" scope="row"><apex:inputText value="{!ds.labelValue}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')}; border-style: solid;  border-left-color:#FF5555; border-left-width:5px;"/></td>
+                                <apex:outputPanel rendered="{!ChineseSimplified}"><td class="slds-truncate" scope="row"><apex:inputText value="{!ds.ChineseSimplified}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')};" /></td></apex:outputPanel>
+                                <apex:outputPanel rendered="{!ChineseTraditional}"><td class="slds-truncate" scope="row"><apex:inputText value="{!ds.ChineseTraditional}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')};" /></td></apex:outputPanel>
+                                <apex:outputPanel rendered="{!Danish}"><td class="slds-truncate" scope="row"><apex:inputText value="{!ds.Danish}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')};" /></td></apex:outputPanel>
+                                <apex:outputPanel rendered="{!English}"><td class="slds-truncate" scope="row"><apex:inputText value="{!ds.English}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')};" /></td></apex:outputPanel>
+                                <apex:outputPanel rendered="{!Finnish}"><td class="slds-truncate" scope="row"><apex:inputText value="{!ds.Finnish}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')};" /></td></apex:outputPanel>
+                                <apex:outputPanel rendered="{!French}"><td class="slds-truncate" scope="row"><apex:inputText value="{!ds.French}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')};" /></td></apex:outputPanel>
+                                <apex:outputPanel rendered="{!German}"><td class="slds-truncate" scope="row"><apex:inputText value="{!ds.German}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')};" /></td></apex:outputPanel>
+                                <apex:outputPanel rendered="{!Italian}"><td class="slds-truncate" scope="row"><apex:inputText value="{!ds.Italian}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')};" /></td></apex:outputPanel>
+                                <apex:outputPanel rendered="{!Japanese}"><td class="slds-truncate" scope="row"><apex:inputText value="{!ds.Japanese}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')};" /></td></apex:outputPanel>
+                                <apex:outputPanel rendered="{!Korean}"><td class="slds-truncate" scope="row"><apex:inputText value="{!ds.Korean}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')};" /></td></apex:outputPanel>
+                                <apex:outputPanel rendered="{!Norwegian}"><td class="slds-truncate" scope="row"><apex:inputText value="{!ds.Norwegian}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')};" /></td></apex:outputPanel>
+                                <apex:outputPanel rendered="{!Portuguese}"><td class="slds-truncate" scope="row"><apex:inputText value="{!ds.Portuguese}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')};" /></td></apex:outputPanel>
+                                <apex:outputPanel rendered="{!Russian}"><td class="slds-truncate" scope="row"><apex:inputText value="{!ds.Russian}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')};" /></td></apex:outputPanel>
+                                <apex:outputPanel rendered="{!Spanish}"><td class="slds-truncate" scope="row"><apex:inputText value="{!ds.Spanish}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')};" /></td></apex:outputPanel>
+                                <apex:outputPanel rendered="{!SpanishMexico}"><td class="slds-truncate" scope="row"><apex:inputText value="{!ds.SpanishMexico}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')};" /></td></apex:outputPanel>
+                                <apex:outputPanel rendered="{!Swedish}"><td class="slds-truncate" scope="row"><apex:inputText value="{!ds.Swedish}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')};" /></td></apex:outputPanel>
+                                <apex:outputPanel rendered="{!Thai}"><td class="slds-truncate" scope="row"><apex:inputText value="{!ds.Thai}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')};" /></td></apex:outputPanel>
+                                                   
+                            </tr>
+                            <apex:variable var="rowNum" value="{!VALUE(rowNum) + 1}"/>
+                        </apex:repeat>
+                        
+                    </tbody>
+                </table>
+                <div style="text-align:left;">
+                    <apex:commandLink style="font-size:larger; background-image:url('{!URLFOR($Resource.images, 'images/add_row.gif')}'); background-repeat: no-repeat; background-size: contain; padding-left: 20px;" value="click here to Add new Row " action="{!addNewRowInTable}"/>
+                </div> 
+              </apex:form>
+            <div class="slds"></div>
+           
+            <apex:form styleClass="slds">
+                <div id="modalId" style="display:{!if(show,'','none')}">                
+                    <div role="dialog" id ="boxId" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal--large" aria-labelledby="header43">
+                        <div class="slds-modal__container">
+                            <div class="slds-modal__header"  style="display:{!IF(created, 'none','block')}">
+                                <h2 id="header43" class="slds-text-heading--medium">Are you sure you want to create the following fields?</h2>
+                            </div>   
+                             <div class="slds-modal__header" style="display:{!IF(created, 'block','none')}">
+                                <h2 id="header43" class="slds-text-heading--medium">Final Result</h2>                                
+                            </div>   
+                            <div class="slds-modal__content slds-p-around--medium">
+                                <div>
+                                    <table class="slds-table slds-table--bordered slds-align-centre" cellspacing="0" >
+                                        <thead>
+                                            <tr class="slds-text-heading--label">
+                                                <th scope="col"><div class="slds-truncate" title="S.No.">S.No.</div></th>
+                                                <th scope="col"><div class="slds-truncate" title="Short Description">Short Description</div></th>
+                                                <th scope="col"><div class="slds-truncate" title="Name">Name</div></th>
+                                                <th scope="col"><div class="slds-truncate" title="Protected Component">Protected Component</div></th>
+                                                <th scope="col"><div class="slds-truncate" title="Categories">Categories</div></th>
+                                                <th scope="col"><div class="slds-truncate" title="Value">Value</div></th>
+                                                 <apex:outputPanel rendered="{!created}">
+                                                    <th scope="col"><div class="slds-truncate" title="Result">Result</div></th>
+                                                    <th scope="col"><div class="slds-truncate" title="Message">Message</div></th>
+                                                </apex:outputPanel>                                         
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:variable value="1" var="rowNum"/>
+                                            <apex:repeat value="{!getData}" var="ds">
+                                                <tr id="row_{!rowNum}" class="slds-hint-parent">
+                                                    <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!rowNum}"/></td>
+                                                    <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!ds.shortDesc}"/></td>
+                                                    <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!ds.labelName}"/></td>
+                                                    <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!ds.labelProt}"/></td>
+                                                    <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!ds.categories}"/></td>
+                                                    <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!ds.labelValue}"/></td>
+                                                       <apex:outputPanel rendered="{!created}">
+                                                        <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!ds.result}"/></td>
+                                                        <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!ds.errorMsg}"/></td>
+                                                    </apex:outputPanel> 
+                                                </tr>
+                                                <apex:variable var="rowNum" value="{!VALUE(rowNum) + 1}"/>
+                                            </apex:repeat>
+                                        </tbody>
+                                    </table>                                                           
+                                </div>
+                            </div>
+                            <div class="slds-modal__footer" style="display:{!IF(created, 'none','block')}">
+                                <apex:commandButton styleClass="slds-button slds-button--neutral" value="Cancel" action="{!hide}" onclick="return hideModal()"/>
+                                <apex:commandButton styleClass="slds-button slds-button--neutral slds-button--brand" value="Create" action="{!create}" />
+                            </div>
+                            <div class="slds-modal__footer" style="display:{!IF(created, 'block','none')}">
+                               <apex:commandButton styleClass="slds-button slds-button--neutral slds-button--brand" value="Exit" action="{!goToMainPage}"/>
+                           </div>
+                           <div class="slds-modal__footer" >
+                               <!--<apex:commandButton styleClass="slds-button slds-button--neutral slds-button--brand" value="Exit" action="{!goToFirstPage}"/>-->
+                           </div>
+                        </div>
+                    </div>
+                    <div class="slds-backdrop slds-backdrop--open" id="backGroundSectionId"></div>
+                </div>                
+            </apex:form>
+        </body>
+    </html> 
+</apex:page>

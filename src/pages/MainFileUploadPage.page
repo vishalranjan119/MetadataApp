@@ -1,0 +1,22 @@
+<apex:page controller="CSVReader" sidebar="false">
+    <apex:form >
+        <apex:sectionHeader title="Upload data from CSV file"/>
+        <apex:messages />
+        <apex:pageBlock id="fileuploadscreen" >
+            <apex:pageBlockSection title="Upload CSV File">          
+                <center>
+                    <br/>
+                    <apex:pageBlockSectionItem >                
+                        <apex:inputFile value="{!contentFile}" fileName="{!nameFile}"/>
+                        <apex:commandButton value="Upload File" action="{!ReadFile}" id="theButton" style="width:70px;"  />
+                    </apex:pageBlockSectionItem>
+                </center>
+                <center>
+                    <apex:pageBlockSectionItem dataStyle="align:center;"> 
+                        <br/> <br/> <font color="red"> <b>Note: Please <a href="https://c.na30.content.force.com/servlet/servlet.FileDownload?file=01536000000WtCx" target="_blank">Click Here</a> to download standard template to Upload data.</b> </font>
+                    </apex:pageBlockSectionItem>
+                </center> 
+        </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
