@@ -1,0 +1,175 @@
+<apex:page sidebar="false" controller="CSVReader" id="entirePage" docType="xhtml-1.0-strict">
+
+    <link type="text/css" rel="stylesheet" href="{!URLFOR($Resource.Bootstrap,'bootstrap-3.3.6-dist/css/bootstrap.css')}" media="all"/>
+    <apex:stylesheet value="{!URLFOR($Resource.SLDS202, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+    <apex:stylesheet value="{!$Resource.JqueryDataTableCSS}"/>
+    <apex:stylesheet value="{!$Resource.dataTablesFixedHeadersCSS}"/>
+    <apex:includeScript value="{!$Resource.Jquery}"/>   
+    <apex:includeScript value="{!$Resource.JqueryDataTableJS}"/>
+    <apex:includeScript value="{!$Resource.dataTablesFixedHeadersMINJS}"/>
+    <script src="{!URLFOR($Resource.Bootstrap,'bootstrap-3.3.6-dist/js/bootstrap.min.js')}"></script>
+
+    <script>        
+      var $j = jQuery.noConflict();
+        $j(document).ready(function() {
+            var table = $j('#table1').DataTable( {
+                paging:false,           
+                ordering: false,                
+				fixedHeader: true                
+            } );
+            
+       var columnHeader = [];
+
+            $j("#table1 thead th").each( function ( i ) {
+               columnHeader.push($j(this).text()+"</br>");
+               var select = $j('<select id='+$j(this).text().replace(" ", "_")+' style="display:none" ><option value=""></option></select>')
+                               .appendTo( $j(this).empty() )
+                               .on( 'change', function () {
+                                   table.column( i )
+                                   .search( $j(this).val() )
+                                   .draw();
+                               } );
+               
+               
+                table.column( i ).data().unique().sort().each( function ( d, j ) {                    
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+               } );
+               
+               
+            $j("#table1 thead th").each( function (i) {$j(this).prepend(columnHeader[i])});
+$j("#Object_Name, #Data_Type").show();
+     
+            
+            
+    	});
+
+
+	
+               
+               
+
+
+
+    
+    </script>
+    
+    
+    <style>
+        .checkboxStyle{
+            display:inline-block; width:19px; height:19px; margin:-1px 4px 0 0; vertical-align:middle; cursor:pointer;
+        } 
+        .headerText{
+           text-align: center;
+           font-weight: bold;
+        }
+       select{
+        color:#000;
+        }
+        #table1_filter{
+        	display: none;
+        }
+    </style>
+    
+    
+    <apex:form styleClass="slds" >
+        <div width="1060px" style="margin:20px; padding:10px;">
+        	<apex:outputPanel style="align:center;">
+                <apex:outputText value="Download Files from here" style="font-weight: bold;"/>
+                
+                <br/>
+                <apex:outputText value="Successful Records: "/>
+                <!--<apex:outputLabel value="{!successListSize}"/>-->
+                <apex:commandLink action="{!DownloadSuccessExcel}" value="{!successListSize} Records"/>
+                
+                <br/>
+                <apex:outputText value="Failed Records: "/>
+                <!--<apex:outputLabel value="{!errorListSize}" />-->
+                <apex:commandLink action="{!DownloadErrorExcel}" value="{!errorListSize} Records"/>
+                <br/><br/>
+                
+                <apex:commandLink value="Let's upload records again" action="{!goToFileUploadPage}"/>
+                <br/><br/>
+        	</apex:outputPanel> 
+            
+        	<apex:outputPanel >
+            	<apex:outputText value="All Validation Complete" rendered="{!validationCompleteLabel}"/>
+                <br/>
+                <apex:outputText value="Please review the page before SUBMIT"/>
+                <br/><br/>
+           		<!--apex:commandButton styleClass="slds-button slds-button--neutral" action="{!finalSubmit}" value="Final Submit" style="margin:10px;height:35px; width:100px; border-radius: 5px"/-->
+            	<apex:commandButton styleClass="slds-button slds-button--neutral" action="{!ExportDataInCSVFile}" value="Export Data" style="margin:10px;height:35px; width:100px; border-radius: 5px"/>
+                <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!goToEditPage}" value="Modify" style="margin:10px;height:35px; width:100px; border-radius: 5px"/>
+            	<!--apex:commandButton styleClass="slds-button slds-button--neutral" action="{!goToFileUploadPage}" value="Cancel" style="margin:10px;height:35px; width:100px; border-radius: 5px"/-->
+                
+            </apex:outputPanel>
+        </div>
+    	<table id="table1" class="slds-table slds-table--bordered" cellspacing="0">
+            <thead>
+                <tr class="slds-text-heading--label">
+                    <th scope="col" class="headerText">S.No.</th>
+                    <apex:outputPanel rendered="{!showErrorColumns}">
+                        <th class="slds-truncate">Result</th>
+                        <th class="slds-truncate">Error Message</th>
+                    </apex:outputPanel>
+                    <th class="slds-truncate">Object Name</th>
+                    <th class="slds-truncate">Data Type</th>
+                    <th class="slds-truncate">Label</th>
+                    <th class="slds-truncate">Field Name</th>
+                    <apex:outputPanel rendered="{!hideExtraColumnsAfterFinalSubmit}">
+                        <th class="slds-truncate">Length</th>
+                        <th class="slds-truncate">Decimal Places</th>
+                        <th class="slds-truncate">Visible Lines</th>
+                        <th class="slds-truncate">Picklist Values</th>
+                        <th class="slds-truncate">Picklist Sorted</th>
+                        <th class="slds-truncate">Default Value</th>
+                        <th class="slds-truncate">Required</th>
+                        <th class="slds-truncate">Track Feed History</th>
+                        <th class="slds-truncate">ExternalId</th>
+                        <th class="slds-truncate">Unique</th>
+                        <th class="slds-truncate">Related To Object</th>
+                        <th class="slds-truncate">Child Relationship Name</th>
+                        <th class="slds-truncate">Related List Label</th>
+                        <th class="slds-truncate">Description</th>
+                        <th class="slds-truncate">Help Text</th>
+                    </apex:outputPanel>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <apex:variable value="1" var="rowNum"/>
+                <apex:repeat value="{!dsList}" var="ds">
+                    <tr class="slds-text-heading--label">
+                        <td style="vertical-align: middle;"><apex:outputtext value="{!rowNum}"/></td>
+                        <apex:outputPanel rendered="{!showErrorColumns}">
+                        	<td style="vertical-align: middle;"><apex:outputText value="{!ds.result}" rendered="{!isCreateFieldCalled}"    style="color:{!If(ds.result =='error','#FE0000',If(ds.result =='Success','#78CA20','#93A086'))};"/></td>
+                            <td style="vertical-align: middle;"><apex:outputText value="{!ds.errorMsg}" rendered="{!isCreateFieldCalled}" style="color:{!If(ds.result =='error','#FE0000','#93A086')};"/></td>
+                        </apex:outputPanel>
+                        <td style="vertical-align: middle;"><apex:outputText value="{!ds.objectName}"/></td>
+                        <td style="vertical-align: middle;"><apex:outputText value="{!ds.fieldType}"/></td>  
+                        <td style="vertical-align: middle;"><apex:outputText value="{!ds.fieldLabel}"/></td>
+                        <td style="vertical-align: middle;"><apex:outputText value="{!ds.fieldName}"/></td>
+                        <apex:outputPanel rendered="{!hideExtraColumnsAfterFinalSubmit}">
+                            <td style="vertical-align: middle;"><apex:outputText value="{!ds.length}"/></td>
+                            <td style="vertical-align: middle;"><apex:outputText value="{!ds.decimalPlace}"/></td>
+                            <td style="vertical-align: middle;"><apex:outputText value="{!ds.visibleLines}" /></td>
+                            <td style="vertical-align: middle;"><apex:outputText value="{!ds.picklistValue}"/></td>
+                            <td style="vertical-align: middle;"><apex:inputCheckbox value="{!ds.picklistSorted}" styleClass="checkboxStyle" disabled="true"/></td>
+                            <td style="vertical-align: middle;"><apex:outputText value="{!ds.fieldDefaultValue}"/></td>
+                            <td style="vertical-align: middle;"><apex:inputCheckbox value="{!ds.required}" styleClass="checkboxStyle" disabled="true"/></td>
+                            <td style="vertical-align: middle;"><apex:inputCheckbox value="{!ds.trackFeedHistory}" styleClass="checkboxStyle" disabled="true"/></td>
+                            <td style="vertical-align: middle;"><apex:inputCheckbox value="{!ds.externalId}" styleClass="checkboxStyle" disabled="true"/></td>
+                            <td style="vertical-align: middle;"><apex:inputCheckbox value="{!ds.unique}" styleClass="checkboxStyle" disabled="true"/></td>
+                            <td style="vertical-align: middle;"><apex:outputText value="{!ds.relatedToObject}"/></td>
+                            <td style="vertical-align: middle;"><apex:outputText value="{!ds.childRelationshipName}"/></td>
+                            <td style="vertical-align: middle;"><apex:outputText value="{!ds.relatedListLabel}"/></td>
+                            <td style="vertical-align: middle;"><apex:outputText value="{!ds.Description}"/></td>
+                            <td style="vertical-align: middle;"><apex:outputText value="{!ds.helpText}"/></td>
+                        </apex:outputPanel>
+                    </tr>
+                    <apex:variable var="rowNum" value="{!VALUE(rowNum) + 1}"/>
+                </apex:repeat>
+             </tbody>
+         </table>
+    </apex:form>   
+</apex:page>

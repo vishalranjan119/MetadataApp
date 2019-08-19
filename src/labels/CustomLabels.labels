@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Char</fullName>
+        <categories>Letter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Character</shortDescription>
+        <value>Character</value>
+    </labels>
+    <labels>
+        <fullName>Hello</fullName>
+        <categories>Hello</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Way of used as a greeting</shortDescription>
+        <value>Hello</value>
+    </labels>
+    <labels>
+        <fullName>Int</fullName>
+        <categories>Decimal,Integer</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Number</shortDescription>
+        <value>Number</value>
+    </labels>
+    <labels>
+        <fullName>Mobiles</fullName>
+        <categories>sony,nokia,samsung</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Smartphones</shortDescription>
+        <value>Mobiles</value>
+    </labels>
+    <labels>
+        <fullName>Testing</fullName>
+        <categories>Testing</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Testing</shortDescription>
+        <value>Testing</value>
+    </labels>
+    <labels>
+        <fullName>Translations</fullName>
+        <categories>Translation</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>the process of translating words or text from one language into another.</shortDescription>
+        <value>Translations</value>
+    </labels>
+</CustomLabels>

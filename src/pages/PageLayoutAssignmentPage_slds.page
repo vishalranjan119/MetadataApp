@@ -1,0 +1,108 @@
+<apex:page controller="CSVReader" sidebar="false" docType="xhtml-1.0-strict">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <apex:stylesheet value="{!URLFOR($Resource.SLDS202, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+            <apex:stylesheet value="{!URLFOR($Resource.DataTableNew,'DataTablesNew/media/css/jquery.dataTables.css')}"/>
+            <apex:stylesheet value="{!$Resource.dataTablesFixedHeadersCSS}"/>
+            <apex:includeScript value="{!$Resource.Jquery}"/>   
+            <apex:includeScript value="{!$Resource.JqueryDataTableJS}"/>
+            <apex:includeScript value="{!$Resource.dataTablesFixedHeadersMINJS}"/>
+            <script type="text/javascript">
+            var $j = jQuery.noConflict();    
+                $j(document).ready(function() {
+                    $j('#table1').DataTable({
+                        ordering: false,
+                        searching: false,
+                        fixedHeader: true,
+                        paging: false
+                    });
+                     });
+            </script>
+            <style type="text/css">
+            	.slds .slds-table th {
+                    font-weight: bolder;
+                }
+     .slds img{
+     height: 20px;
+     }
+            </style>  
+        </head>
+        <body>
+            <apex:form styleClass="slds">
+                <div class="slds-page-header" role="banner" style="background-color:#005FB2">
+                  <div class="slds-media slds-media--center">
+                    <div class="slds-media__figure">
+                      <svg aria-hidden="true" class="slds-icon">
+                        <use xlink:href="{!URLFOR($Resource.SLDS202, '/assets/icons/utility-sprite/svg/symbols.svg#push')}"></use>
+                      </svg>
+                    </div>
+                    <div class="slds-media__body">
+                      <p class="slds-page-header__title slds-truncate slds-align-middle" title="Now, add your field to Page!" style="color:#ffffff">
+                          Now, add your field to Page! 
+                      </p>      
+                    </div>
+                  </div>
+                </div>
+                <div class="slds-page-header" role="banner">
+                    <div class="slds-grid">    
+                        <div class="slds-col slds-no-flex slds-grid slds-align-bottom">      
+                            <div class="slds-button-group" role="group">
+                                <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!goToFLSAssignmentPage}" value="Previous" style="margin:10px;height:35px; width:100px; border-radius: 5px"/>                       
+                                
+                                <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!goToFileUploadPage}" value="Cancel" style="margin:10px;height:35px; width:100px; border-radius: 5px"/>
+                                <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!goToReviewPage}" value="Next" style="margin:10px;height:35px; width:100px; border-radius: 5px"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+                
+                <apex:pagemessages />
+                <div  style="margin-bottom:10px;"> 
+                    <table  class="slds-table slds-table--bordered" cellspacing="0" id="table1">
+                        <thead>
+                            <tr class="slds-text-heading--label">
+                                <th scope="col">
+                                    <div class="slds-truncate" title="S.No.">S.No.</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Data Type">Data Type</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Field Name">Field Name</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Object Name">Object Name</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Page Layout">Page Layout</div>
+                                </th>                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <apex:variable value="1" var="rowNum"/>
+                            <apex:repeat value="{!dsList}" var="ds">
+                                <tr id="row_{!rowNum}" class="slds-hint-parent">
+                                    <td class="slds-truncate slds-size--1-of-8" scope="row"><apex:outputtext value="{!rowNum}"/></td>
+                                    <td class="slds-truncate slds-size--1-of-8" scope="row"><apex:outputText value="{!ds.fieldType}" /></td>
+                                    <td class="slds-truncate slds-size--1-of-8" scope="row"><apex:outputText value="{!ds.fieldName}" /></td>
+                                    <td class="slds-truncate slds-size--1-of-8" scope="row"><apex:outputText value="{!ds.ObjectName}" /></td>
+                                    <td class="slds-truncate slds-size--4-of-8" scope="row">
+                                        <c:MultiSelect id="mulPan" leftLabel=""
+                                                       leftOption="{!ds.allOptionsForLayoutAssignment}"
+                                                       rightLabel=""
+                                                       rightOption="{!ds.selectedOptionsForLayoutAssignment}"
+                                                       size="7"
+                                                       Width="300px"/>
+                                    </td>                                   
+                                </tr>
+                                <apex:variable var="rowNum" value="{!VALUE(rowNum) + 1}"/>
+                            </apex:repeat>
+                        </tbody>
+                    </table>    
+                </div>
+                <!--/apex:outputPanel-->
+            </apex:form>
+            <div class="slds"></div>
+        </body>      
+    </html>
+</apex:page>

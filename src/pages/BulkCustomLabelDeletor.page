@@ -1,0 +1,265 @@
+<apex:page controller="BulkCustomLabelDeletorController" sidebar="false">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <apex:stylesheet value="{!URLFOR($Resource.SLDS202, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+            <apex:includeScript value="{!$Resource.Jquery}"/>
+            <apex:includeScript value="{!URLFOR($Resource.Bootstrap,'bootstrap-3.3.6-dist/js/bootstrap.min.js')}"/>
+            
+            
+            <script type="text/javascript">  
+            function hideModal(){
+                document.getElementById("modalId").style.display = "none";
+                return false;
+            }
+            var $j = jQuery.noConflict();    
+            $j(document).ready(function() {
+                $j("#deletePage").click(function(e){
+                    var row={};
+                    var rows = [];
+                    $j("#RefreshTable tbody tr").each( function () {
+                        //var rowId = $j(this).attr("id");
+                        //var value= $j(this).find('#'+rowId+'_fieldName input').val();
+                       console.log($j(this))
+                        //fieldName.push(value);
+                    });
+                    
+                	$j("#modalId").show();
+                    
+                    return false;
+                });
+                 
+            });  
+            
+            function changeStateOfcheckbox(ele){
+                var checkboxes = document.getElementsByTagName('input');
+                if (ele.checked) {
+                    for (var i = 0; i < checkboxes.length; i++) {
+                        console.debug(checkboxes[i].id);
+                        if (checkboxes[i].type == 'checkbox' && checkboxes[i].id.includes("allCheckboxes")) {
+                            checkboxes[i].checked = true;
+                        }
+                    }
+                } else {
+                    for (var i = 0; i < checkboxes.length; i++) {                        
+                        if (checkboxes[i].type == 'checkbox' && checkboxes[i].id.includes("allCheckboxes")) {
+                            checkboxes[i].checked = false;
+                        }
+                    }
+                }
+            }
+            </script>
+            <style type="text/css">
+            	.slds .slds-table th {
+                    font-weight: bolder;
+                }
+                .outerDivPB{
+                	width: 100%; 
+                	height: 1.4em; 
+                	position: relative;
+                	background-color: #f1f1f1;
+                	border-radius: 4px!important; 
+                	margin-top:5px; 
+                	display:none;
+                }
+                .innerDivPB{
+                	width:0%;
+                	color: #fff!important;
+                	background-color: #4CAF50!important; 
+                	background-color: #757575; 
+                	height: 100%;   
+                	position: absolute;    
+                	line-height: inherit;
+                	text-align:center;
+                	border-radius:10px;
+                }
+            </style>
+            
+        </head>
+        
+        <body>
+            <apex:outputPanel rendered="{!data}">
+            <apex:form styleClass="slds">    
+                
+                <div>
+                    <div class="slds-page-header" role="banner" style="background-color:#005FB2">
+                        <div class="slds-media slds-media--center">
+                            <div class="slds-media__figure">
+                                <svg aria-hidden="true" class="slds-icon">
+                                    <use xlink:href="{!URLFOR($Resource.SLDS202, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+                                </svg>
+                            </div>
+                            <div class="slds-media__body">
+                                <p class="slds-page-header__title slds-truncate slds-align-middle" title="Bulk Delete" style="color:#ffffff">
+                                    Bulk Delete Custom Label Page
+                                </p>      
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slds-page-header" role="banner">
+                        
+                        <div id="progressBar" class="outerDivPB">                                       
+								<div id="myBar" class="innerDivPB"></div>
+						</div>
+                    </div>
+                </div>
+                <apex:pageMessages />
+                <apex:outputPanel styleClass="divAll container4" rendered="{!isObjectSelected}">                                        
+                        <table id="RefreshTable" class="slds-table slds-table--bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="slds-text-heading--label">
+                                <th class="slds-is-sortable slds-is-resizable" scope="col">
+                                    <div class="slds-th__action slds-text-link--reset">
+                                        <span class="slds-truncate">S.No.</span>
+                                    </div>
+                                </th>
+                                <th class="slds-is-sortable slds-is-resizable" scope="col">
+                                    <div class="slds-th__action slds-text-link--reset">
+                                        <span class="slds-truncate">
+                                            <apex:inputCheckbox onchange="changeStateOfcheckbox(this)" />
+                                        </span>
+                                    </div>
+                                </th>
+                                <th class="slds-is-sortable slds-is-resizable" scope="col">
+                                    <div class="slds-th__action slds-text-link--reset">
+                                        <span class="slds-truncate">Name</span>
+                                    </div>
+                                </th>
+                                <th class="slds-is-sortable slds-is-resizable" scope="col">
+                                    <div class="slds-th__action slds-text-link--reset">
+                                        <span class="slds-truncate">Categories</span>
+                                    </div>
+                                </th>
+                                <th class="slds-is-sortable slds-is-resizable" scope="col">
+                                    <div class="slds-th__action slds-text-link--reset">
+                                        <span class="slds-truncate">Short Description</span>
+                                    </div>
+                                </th>
+                                <th class="slds-is-sortable slds-is-resizable" scope="col">
+                                    <div class="slds-th__action slds-text-link--reset">
+                                        <span class="slds-truncate">Value</span>
+                                    </div>
+                                </th>
+                                
+                            </tr>
+                        </thead>                                               
+                        <tbody>
+                            <apex:variable value="1" var="rowNum"/>
+                            <apex:repeat value="{!getData}" var="ds">
+                                <tr class="slds-hint-parent">
+                                    <td class="slds-truncate" scope="row"><apex:outputtext value="{!rowNum}"/></td>
+                                    <td class="slds-truncate" scope="row"><apex:inputCheckbox value="{!ds.isDeletable}" id="allCheckboxes"/></td>
+                                    <td class="slds-truncate" scope="row"><apex:outputLabel value="{!ds.labelName}" /></td>
+                                    <td class="slds-truncate" scope="row"><apex:outputLabel value="{!ds.categories}"/></td>
+                                    <td class="slds-truncate" scope="row"><apex:outputLabel value="{!ds.shortDesc}" /></td>
+                                    <td class="slds-truncate" scope="row"><apex:outputLabel value="{!ds.labelValue}" /></td>
+                                                        
+                                </tr>
+                                <apex:variable var="rowNum" value="{!VALUE(rowNum) + 1}"/>
+                            </apex:repeat>
+                        </tbody>
+                    </table>
+                   <div align="center" style="margin-top:10px;">
+                       <apex:commandButton action="{!display}" reRender="out" value="Delete Selected Fields"  styleClass="slds-button slds-button--neutral" />
+                    </div>
+                  <!-- <apex:outputPanel id="out">
+                        {!getData[0]}
+                    </apex:outputPanel> -->
+                </apex:outputPanel>
+            </apex:form>
+            
+            <div class="slds"></div>
+           
+            <apex:form styleClass="slds">
+                <apex:outputPanel id="out">
+                <div id="modalId" style="display:{!statu}">                
+                    <div role="dialog" id ="boxId" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal--large" aria-labelledby="header43">
+                        <div class="slds-modal__container">
+                            <div class="slds-modal__header" style="display:{!IF(isDeleted, 'none','block')}">
+                                <h2 id="header43" class="slds-text-heading--medium">Are you sure you want to delete the following fields?</h2>
+                            </div>       
+                            <div class="slds-modal__header" style="display:{!IF(isDeleted, 'block','none')}">
+                                <h2 id="header43" class="slds-text-heading--medium">Final Result</h2>                                
+                            </div>    
+                          <!--  <div class="slds-modal__content" style="display:{!IF(isDeleted, 'block','none')};align:left;padding:10px;">
+                                    <apex:outputText value="Download Files from here" style="font-weight: bold;"/>
+                                    
+                                    <br/>
+                                    <apex:outputText value="Successful Records: "/>
+                                    <apex:commandLink action="{!DownloadSuccessExcel}" value="{!successListSize} Records"/>
+                                    
+                                    <br/>
+                                    <apex:outputText value="Failed Records: "/>
+                                    <apex:commandLink action="{!DownloadErrorExcel}" value="{!errorListSize} Records"/>
+                                    <br/>                                                                       
+                            </div> -->
+                            <div class="slds-modal__content slds-p-around--medium">
+                                <div>
+                                    <table class="slds-table slds-table--bordered slds-align-centre" cellspacing="0" >
+                                        <thead>
+                                            <tr class="slds-text-heading--label">
+                                                <th scope="col"><div class="slds-truncate" title="S.No.">S.No.</div></th>
+                                                <th scope="col"><div class="slds-truncate" title="Short Description">Short Description</div></th>
+                                                <th scope="col"><div class="slds-truncate" title="Name">Name</div></th>
+                                                <th scope="col"><div class="slds-truncate" title="Categories">Categories</div></th>
+                                                <th scope="col"><div class="slds-truncate" title="Value">Value</div></th>
+                                              <apex:outputPanel rendered="{!isDeleted}">
+                                                    <th scope="col"><div class="slds-truncate" title="Result">Result</div></th>
+                                                	<th scope="col"><div class="slds-truncate" title="Message">Message</div></th>
+                                                </apex:outputPanel>                                          
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <apex:variable value="1" var="rowNum"/>
+                                            <apex:repeat value="{!getData}" var="ds">
+                                                
+                                                <tr id="row_{!rowNum}" class="slds-hint-parent" style="display:{!if(ds.isDeletable,'','none')}">
+                                                    
+                                                    <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!rowNum}"/></td>
+                                                    <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!ds.shortDesc}"/></td>
+                                                    <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!ds.labelName}"/></td>
+                                                    <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!ds.categories}"/></td>
+                                                    <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!ds.labelValue}"/></td>
+                                                  <apex:outputPanel rendered="{!isDeleted}">
+                                                    	<td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!ds.result}"/></td>
+                                                    	<td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!ds.errorMsg}"/></td>
+                                                    </apex:outputPanel> 
+                                                        
+                                                </tr>
+                                              
+                                                <apex:variable var="rowNum" value="{!VALUE(rowNum) + 1}"/>
+                                            </apex:repeat>
+                                        </tbody>
+                                            
+                                    </table>                                                           
+                                </div>
+                            </div>
+                                               
+                            <div class="slds-modal__footer" style="display:{!IF(isDeleted, 'none','block')}">
+                                <apex:commandButton styleClass="slds-button slds-button--neutral" value="Cancel" onclick="return hideModal()"/>
+                                <apex:commandButton action="{!deleteSelectedField}" styleClass="slds-button slds-button--neutral slds-button--brand" value="Delete" />
+                            </div>
+                            <div class="slds-modal__footer" style="display:{!IF(isDeleted, 'block','none')}">
+                               <apex:commandButton styleClass="slds-button slds-button--neutral slds-button--brand" value="Exit" action="{!goToFirstPage}"/>
+                           </div>
+                           <div class="slds-modal__footer" >
+                               <!--<apex:commandButton styleClass="slds-button slds-button--neutral slds-button--brand" value="Exit" action="{!goToFirstPage}"/>-->
+                           </div>
+                        </div>
+                    </div>
+                    <div class="slds-backdrop slds-backdrop--open" id="backGroundSectionId"></div>
+                </div>
+                    </apex:outputPanel>
+            </apex:form>
+            </apex:outputPanel>
+            <div style="display:{!if(data,'none','block')}">
+                
+                <h1>
+                    Please Create Label First!
+                </h1>
+            </div>
+        </body>
+            
+    </html>
+</apex:page>

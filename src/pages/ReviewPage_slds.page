@@ -1,0 +1,201 @@
+<apex:page sidebar="false" controller="CSVReader" id="entirePage" docType="xhtml-1.0-strict">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>          
+            <apex:stylesheet value="{!URLFOR($Resource.SLDS202, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+            <apex:stylesheet value="{!$Resource.JqueryDataTableCSS}"/>
+            <apex:stylesheet value="{!$Resource.dataTablesFixedHeadersCSS}"/>
+            <apex:includeScript value="{!$Resource.Jquery}"/>   
+            <apex:includeScript value="{!$Resource.JqueryDataTableJS}"/>
+            <apex:includeScript value="{!$Resource.dataTablesFixedHeadersMINJS}"/>
+            <script type="text/javascript">
+              var $j = jQuery.noConflict();
+        	$j(document).ready(function() {
+            
+                var table = $j('#table1').DataTable( {
+                    paging:false,           
+                    ordering: true,
+                    columnDefs: [{
+                        "targets": [0,1,2,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],
+                        "orderable": false
+                	}],               
+                    fixedHeader: true                
+                } );
+            
+       			var columnHeader = [];
+
+            $j("#table1 thead th").each( function ( i ) {
+               columnHeader.push($j.trim($j(this).text())+"</br>");
+               var select = $j('<select id='+$j.trim($j(this).text()).replace(" ", "_")+' style="display:none" ><option value=""></option></select>')
+                               .appendTo( $j(this).empty() )
+                               .on( 'change', function () {
+                                   table.column( i )
+                                   .search( $j(this).val() )
+                                   .draw();
+                               });
+               
+               
+                table.column( i ).data().unique().sort().each( function ( d, j ) {                    
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+                console.log(columnHeader);
+               } );
+               
+               
+            $j("#table1 thead th").each( function (i) {$j(this).prepend(columnHeader[i])});
+			$j("#Object_Name, #Data_Type").show();
+     
+            
+            
+    	});
+            </script>
+         <style type="text/css">
+            	.slds .slds-table th {
+                    font-weight: bolder;
+   
+         }  
+             #table1_filter{
+        	display: none;
+        }
+            </style>
+        </head>
+        <body>
+            <apex:form styleClass="slds">
+                <!--apex:actionFunction name="finalSubmit" action="{!finalSubmit}"/-->
+                <div class="slds-page-header" role="banner" style="background-color:#005FB2">
+                    <div class="slds-media slds-media--center">
+                        <div class="slds-media__figure" id="headerIconId">
+                            <svg aria-hidden="true" class="slds-icon">
+                                <use xlink:href="{!URLFOR($Resource.SLDS202, '/assets/icons/utility-sprite/svg/symbols.svg#push')}"></use>
+                            </svg>
+                        </div>
+                        <div class="slds-media__body" id="headerId">
+                            <p class="slds-page-header__title slds-truncate slds-align-middle" title="Let's have a final look! " style="color:#ffffff">
+                                Let's have a final look! 
+                            </p>      
+                        </div>
+                    </div>
+                </div>
+                <apex:outputPanel rendered="{!isRenderExtraCol}">                
+                    <div class="slds-page-header" role="banner" id="afterSubmitDivId">
+                        <div class="slds-media slds-media--center">
+                            <div class="slds-media__figure">
+                                <svg aria-hidden="true" class="slds-icon">
+                                    <use xlink:href="{!URLFOR($Resource.SLDS202, '/assets/icons/utility-sprite/svg/symbols.svg#download')}"></use>
+                                </svg>
+                            </div>
+                            <div class="slds-media__body">
+                                <p class="slds-page-header__title slds-truncate slds-align-middle" title="Download Files from here">
+                                    "Download Files from here"
+                                </p>      
+                            </div>
+                            
+                            <div class="slds-is-relative">                           
+                                <apex:outputText value="Successful Records: "/>
+                                <!--<apex:outputLabel value="{!successListSize}"/>-->
+                                <apex:commandLink action="{!DownloadSuccessExcel}" value="{!successListSize} Records"/>
+                                
+                                <br/>
+                                <apex:outputText value="Failed Records: "/>
+                                <!--<apex:outputLabel value="{!errorListSize}" />-->
+                                <apex:commandLink action="{!DownloadErrorExcel}" value="{!errorListSize} Records"/>
+                                <br/><br/>
+                                
+                                <apex:commandLink value="Let's upload records again" action="{!goToFileUploadPage}"/>
+                                <br/><br/>      
+                            </div>
+                            
+                        </div>
+                    </div>
+                </apex:outputPanel>
+                <div class="slds-page-header" role="banner" id="buttonsId">
+                    <div class="slds-grid">    
+                        <div class="slds-col slds-no-flex slds-grid slds-align-bottom">      
+                            <div class="slds-button-group" role="group">
+                                <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!createField}" value="Submit" style="margin:10px;height:35px; width:100px; border-radius: 5px"/>                                                       
+                                <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!ExportDataInCSVFile}" value="Export Data" style="margin:10px;height:35px; width:100px; border-radius: 5px"/>
+                                <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!goToEditPage}" value="Modify" style="margin:10px;height:35px; width:100px; border-radius: 5px"/>
+                                <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!goToFileUploadPage}" value="Cancel" style="margin:10px;height:35px; width:100px; border-radius: 5px"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div  style="margin-bottom:10px;"> 
+                    <table  id="table1" class="slds-table slds-table--bordered slds-align-centre" cellspacing="0">
+                        <thead>
+                            <tr class="slds-text-heading--label">
+                                <th scope="col"><div class="slds-truncate" title="S.No.">S.No.</div></th>
+                                <apex:outputPanel rendered="{!isRenderExtraCol}">
+                                    <th scope="col"> <div class="slds-truncate" title="Result">Result</div> </th>
+                                    <th scope="col"> <div class="slds-truncate" title="Error Message">Error Message</div> </th>
+                                </apex:outputPanel>
+                                <th scope="col"> <div class="slds-truncate" title="Object Name">Object Name</div></th>
+                                <th scope="col"> <div class="slds-truncate" title="Data Type">Data Type</div></th>
+                                <th scope="col"> 
+                                    <div class="slds-truncate" title="Field Label">
+                                        Field Label
+                                    </div> 
+                                </th>
+                                <th scope="col"> <div class="slds-truncate" title="Field Name">Field Name</div> </th>
+                                <apex:outputPanel rendered="{!!isRenderExtraCol}">
+                                    <th scope="col"> <div class="slds-truncate" title="Length">Length</div></th>
+                                    <th scope="col"> <div class="slds-truncate" title="Decimal Places">Decimal Places</div></th>
+                                    <th scope="col"> <div class="slds-truncate" title="Visible Lines">Visible Lines</div> </th>
+                                    <th scope="col"> <div class="slds-truncate" title="Picklist Values">Picklist Values</div> </th>
+                                    <th scope="col"> <div class="slds-truncate" title="Picklist Sorted">Picklist Sorted</div></th>
+                                    <th scope="col"> <div class="slds-truncate" title="Default Value">Default Value</div></th>
+                                    <th scope="col"> <div class="slds-truncate" title="Required">Required</div> </th>
+                                    <th scope="col"> <div class="slds-truncate" title="Track Feed History">Track Feed History</div> </th>
+                                    <th scope="col"> <div class="slds-truncate" title="ExternalId">ExternalId</div> </th>
+                                    <th scope="col"> <div class="slds-truncate" title="Unique">Unique</div> </th>
+                                    <th scope="col"> <div class="slds-truncate" title="Related To Object">Related To Object</div></th>
+                                    <th scope="col"> <div class="slds-truncate" title="Child Relationship Name">Child Relationship Name</div></th>
+                                    <th scope="col"> <div class="slds-truncate" title="Related List Label">Related List Label</div> </th>
+                                    <th scope="col"> <div class="slds-truncate" title="Description">Description</div> </th>
+                                    <th scope="col"> <div class="slds-truncate" title="Help Text">Help Text</div> </th>
+                                </apex:outputPanel>                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <apex:variable value="1" var="rowNum"/>
+                            <apex:repeat value="{!dsList}" var="ds">
+                                <tr id="row_{!rowNum}" class="slds-hint-parent">
+                                    <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!rowNum}"/></td>
+                                    <apex:outputPanel rendered="{!isRenderExtraCol}">
+                                        <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!ds.result}" style="color:{!If(ds.result =='error','#FE0000',If(ds.result =='Success','#78CA20','#93A086'))};"/></td>
+                                        <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!ds.errorMsg}" style="color:{!If(ds.result =='error','#FE0000','#93A086')};"/></td>
+                                    </apex:outputPanel>
+                                    <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputText value="{!ds.ObjectName}" /></td>
+                                    <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputText value="{!ds.fieldType}" /></td>
+                                    <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputText value="{!ds.fieldLabel}" /></td>
+                                    <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputText value="{!ds.fieldName}" /></td>
+                                    <apex:outputPanel rendered="{!!isRenderExtraCol}">
+                                        <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputText value="{!ds.length}"/></td>
+                                        <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputText value="{!ds.decimalPlace}"/></td>
+                                        <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputText value="{!ds.visibleLines}" /></td>
+                                        <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputText value="{!ds.picklistValue}"/></td>
+                                        <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:inputCheckbox value="{!ds.picklistSorted}" styleClass="checkboxStyle" disabled="true"/></td>
+                                        <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputText value="{!ds.fieldDefaultValue}"/></td>
+                                        <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:inputCheckbox value="{!ds.required}" styleClass="checkboxStyle" disabled="true"/></td>
+                                        <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:inputCheckbox value="{!ds.trackFeedHistory}" styleClass="checkboxStyle" disabled="true"/></td>
+                                        <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:inputCheckbox value="{!ds.externalId}" styleClass="checkboxStyle" disabled="true"/></td>
+                                        <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:inputCheckbox value="{!ds.unique}" styleClass="checkboxStyle" disabled="true"/></td>
+                                        <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputText value="{!ds.relatedToObject}"/></td>
+                                        <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputText value="{!ds.childRelationshipName}"/></td>
+                                        <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputText value="{!ds.relatedListLabel}"/></td>
+                                        <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputText value="{!ds.Description}"/></td>
+                                        <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputText value="{!ds.helpText}"/></td>
+                                    </apex:outputPanel>
+                                </tr>
+                                <apex:variable var="rowNum" value="{!VALUE(rowNum) + 1}"/>
+                            </apex:repeat>
+                        </tbody>
+                    </table>    
+                </div>
+                
+                
+            </apex:form>
+            <div class="slds"></div>
+        </body>
+        
+    </html>
+</apex:page>

@@ -1,0 +1,139 @@
+<apex:page controller="BulkFieldUpdatorController">
+    <script>
+    function alertUser(fieldType) {
+        var str=document.getElementById(fieldType).value;
+        if(str=="Location")
+        {
+            confirm('Can not Change Field type From Location');
+        }
+        else{
+            if(confirm	('Changing the Field type will delete all the Existing data'))
+            {
+                changeStructure();
+            }
+            else
+            {
+                initialState();
+            }
+        }
+        return;   
+    }
+    
+    </script>
+    <apex:form >
+        <apex:actionFunction action="{!changeStructure}" name="changeStructure" />
+        <apex:actionFunction action="{!initialState}" name="initialState" />
+        
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+                <apex:selectList title="Object Name" label="Object Name" value="{!selectedObject}" size="1">
+                    <apex:selectOptions value="{!objNames}">
+                    </apex:selectOptions>
+                </apex:selectList>
+                <apex:outputText label="Selected Object:" value="{!selectedObject}" id="RefreshObject"></apex:outputText>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Fields Available To Update" columns="1">
+                <apex:pageMessages ></apex:pageMessages>
+                
+                <apex:pageBlockTable value="{!dsList}" var="ds" id="RefreshTable">
+                    
+                    <apex:column >
+                        <apex:inputCheckbox value="{!ds.isUpdatable}" id="check" >
+                            
+                            <apex:actionSupport event="onchange" reRender="RefreshTable"/>
+                        </apex:inputCheckbox>                        
+                    </apex:column>
+                    
+                    <apex:column headerValue="Result" rendered="{!isUpdateMetadataCalled}">
+                        <apex:outputText value="{!ds.result}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Error Message" rendered="{!isUpdateMetadataCalled}">
+                        <apex:outputText value="{!ds.errorMsg}"/>
+                    </apex:column> 
+                    <apex:column headerValue="Data Type" width="40px">
+                        <apex:selectList id="test" value="{!ds.changedDataType}" onchange="alertUser('{!$Component.fieldType}')" size="1" disabled="{!NOT(ds.isUpdatable)}" rendered="{!ds.fieldType!='Location'}">
+                            <apex:selectOptions value="{!dataTypeOptions}">
+                            </apex:selectOptions>
+                            <apex:inputhidden id="fieldType" value="{!ds.fieldType}"></apex:inputhidden>
+                            <!--apex:actionSupport event="onchange" action="{!changeStructure}" id="RefreshTable2" ></apex:actionSupport-->
+                        </apex:selectList>
+                        <apex:inputText value="{!ds.fieldType}" disabled="true" rendered="{!ds.fieldType=='Location'}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Label" width="50px" >
+                        <apex:inputText value="{!ds.fieldLabel}" disabled="{!NOT(ds.isUpdatable)}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Field Name" width="50px" >
+                        <apex:inputText value="{!ds.fieldName}" disabled="{!NOT(ds.isUpdatable)}" />
+                    </apex:column>
+                    
+                    <apex:column headerValue="Length" width="30px" >  
+                        <apex:inputText value="{!ds.length}" disabled="{!(ISNULL(ds.length) || NOT(ds.isUpdatable) ) }" />
+                    </apex:column>
+                    
+                    <apex:column headerValue="Decimal Places" width="40px">
+                        <apex:inputText value="{!ds.decimalPlace}" disabled="{!(ISNULL(ds.decimalPlace)|| NOT(ds.isUpdatable))}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Visible Lines" width="30px">
+                        <apex:inputText value="{!ds.visibleLines}" disabled="{!(ISNULL(ds.visibleLines) || NOT(ds.isUpdatable))}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Picklist Value" width="50px">
+                        <apex:inputTextarea value="{!ds.picklistValue}" disabled="{!(ISNULL(ds.picklistValue) || NOT(ds.isUpdatable))}" />
+                    </apex:column>
+                    
+                    <apex:column headerValue="Picklist Sorted" width="30px">
+                        <apex:inputCheckbox value="{!ds.picklistSorted}" disabled="{!(ISNULL(ds.picklistSortedCheck) || NOT(ds.isUpdatable))}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Default Value" width="40px">
+                        <apex:inputText value="{!ds.fieldDefaultValue}" disabled="{!(ISNULL(ds.fieldDefaultValue) || NOT(ds.isUpdatable))}" />
+                    </apex:column>
+                    
+                    <apex:column headerValue="Required" width="30px">
+                        <apex:inputCheckbox value="{!ds.required}" disabled="{!(ISNULL(ds.requiredCheck) || NOT(ds.isUpdatable))}"/>
+                    </apex:column>
+                    
+                    <!--apex:column headerValue="Track Feed History" width="50px"><apex:inputCheckbox value="{!ds.trackFeedHistory }" /></apex:column-->
+                    
+                    <apex:column headerValue="ExternalId" width="30px">
+                        <apex:inputCheckbox value="{!ds.externalId}" disabled="{!(ISNULL(ds.externalIdCheck) || NOT(ds.isUpdatable))}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Unique" width="30px">
+                        <apex:inputCheckbox value="{!ds.unique}" disabled="{!(ISNULL(ds.uniqueCheck) || NOT(ds.isUpdatable))}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Related To Object" width="30px">
+                        <apex:inputText value="{!ds.relatedToObject}" disabled="{!(ISNULL(ds.lookupFieldCheck) || NOT(ds.isUpdatable))}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Child Relationship Name" width="50px">
+                        <apex:inputText value="{!ds.childRelationshipName}" disabled="{!(ISNULL(ds.lookupFieldCheck) || NOT(ds.isUpdatable))}"/>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Related List Label" width="50px">
+                        <apex:inputText value="{!ds.relatedListLabel}" disabled="{!(ISNULL(ds.lookupFieldCheck)||NOT(ds.isUpdatable))}"/>
+                    </apex:column>
+                    
+                    <!--apex:column headerValue="Description" width="500"><apex:inputTextarea value="{!ds.Description}" /></apex:column-->
+                    
+                    <apex:column headerValue="Help Text" width="500px">
+                        <apex:inputTextarea value="{!ds.helpText}" disabled="{! NOT(ds.isUpdatable)}" />
+                    </apex:column>
+                    
+                    
+                    
+                </apex:pageBlockTable>  
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!createEditStructure}" value="AccessFields" />
+                <apex:commandButton action="{!updateMetadata}" value="Save" />
+            </apex:pageBlockButtons>
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

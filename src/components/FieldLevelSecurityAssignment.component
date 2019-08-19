@@ -1,0 +1,158 @@
+<apex:component controller="CSVReader" >
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <apex:stylesheet value="{!URLFOR($Resource.SLDS202, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+            <apex:stylesheet value="{!URLFOR($Resource.DataTableNew,'DataTablesNew/media/css/jquery.dataTables.css')}"/>
+            <apex:stylesheet value="{!$Resource.dataTablesFixedHeadersCSS}"/>
+            <apex:includeScript value="{!$Resource.Jquery}"/>   
+            <apex:includeScript value="{!$Resource.JqueryDataTableJS}"/>
+            <apex:includeScript value="{!$Resource.dataTablesFixedHeadersMINJS}"/>
+            
+            <script type="text/javascript">
+            function hideModal(){
+                document.getElementById("modalId").style.display = "none";
+                return false;
+            }
+            function showModal(){
+                document.getElementById("modalId").style.display = "block";
+                return false;
+            }
+            function showfrm(){
+                document.getElementById("frm1").style.display = "block";
+                return false;
+            }
+            
+            /* var $j = jQuery.noConflict();    
+            $j(document).ready(function() {
+                $j('#table1').DataTable({
+                    ordering: false,
+                    searching: false,
+                    fixedHeader: true,
+                    paging: false
+                });
+                
+            }); */
+            </script>
+            
+            <style type="text/css">
+                .slds .slds-table th {
+                font-weight: bolder;
+                }
+                .slds img{
+                height: 20px;
+                }
+            </style>   
+        </head>
+        <body>
+            <apex:form id="id1" styleClass="slds"> 				
+                <!--apex:outputPanel rendered="{!displayModal}"-->
+                <div id="flsModalId" style="display:block">
+                    <div role="dialog" id ="boxId" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal--large slds-scrollable" aria-labelledby="header43">
+                        <div class="slds-modal__container">
+                            <div class="slds-modal__header" style="background-color:#005FB2">                            
+                                <h2 id="header43" class="slds-text-heading--medium" style="color:#FFFFFF">This is time to apply Field Level Security!</h2>
+                            </div>
+                            <div class="slds-modal__content slds-p-around--medium">                                
+                                <div style="height:Auto;">
+                                    <table id="tableFLS"  class="slds-table slds-table--bordered" cellspacing="0" >
+                                        <thead>
+                                            <tr class="slds-text-heading--label">
+                                                <th scope="col"><div class="slds-truncate" title="S.No.">S.No.</div></th>
+                                                <th scope="col"><div class="slds-truncate" title="Data Type">Data Type</div></th>
+                                                <th scope="col"><div class="slds-truncate" title="Field Name">Field Name</div></th>
+                                                <th scope="col"><div class="slds-truncate" title="Object Name">Object Name</div></th>
+                                                <th scope="col"><div class="slds-truncate" title="Read Only">Read Only</div></th>
+                                                <th scope="col"><div class="slds-truncate" title="Visible">Visible</div></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:variable value="1" var="rowNum"/>
+                                            <apex:repeat value="{!dsList}" var="ds">
+                                                <tr id="row_{!rowNum}" class="slds-hint-parent">
+                                                    <td class="slds-truncate" scope="row"><apex:outputtext value="{!rowNum}"/></td>
+                                                    <td class="slds-truncate" scope="row"><apex:outputText value="{!ds.fieldType}" /></td>
+                                                    <td class="slds-truncate" scope="row"><apex:outputText value="{!ds.fieldName}" /></td>
+                                                    <td class="slds-truncate" scope="row"><apex:outputText value="{!ds.ObjectName}" /></td>
+                                                    <td class="slds-truncate" scope="row" style="overflow-x:scroll;">
+                                                        <c:MultiSelect id="mulPan" leftLabel=""
+                                                                       leftOption="{!ds.allOptionsForReadOnly}"
+                                                                       rightLabel=""
+                                                                       rightOption="{!ds.selectedOptionsForReadOnly}"
+                                                                       size="7"
+                                                                       Width="240px"/>
+                                                    </td>
+                                                    <td class="slds-truncate" scope="row" style="overflow-x:scroll;">
+                                                        <c:MultiSelect id="mulPan2" leftLabel=""
+                                                                       leftOption="{!ds.allOptionsForVisibleOnly}"
+                                                                       rightLabel=""
+                                                                       rightOption="{!ds.selectedOptionsForVisibleOnly}"
+                                                                       size="7"
+                                                                       width="240px"/>
+                                                    </td>
+                                                </tr>
+                                                <apex:variable var="rowNum" value="{!VALUE(rowNum) + 1}"/>
+                                            </apex:repeat>
+                                        </tbody>
+                                    </table> 
+                                </div>
+                            </div>
+                            <div class="slds-modal__footer">
+                                <apex:commandButton styleClass="slds-button slds-button--neutral slds-button--brand" value="Apply To All" onclick="return showModal()"  />
+                                <apex:commandButton styleClass="slds-button slds-button--neutral" value="Cancel" onclick="return hideFLSModal()"/>
+                                <apex:commandButton styleClass="slds-button slds-button--neutral slds-button--brand" value="Save" action="{!goToEditPage}"  />
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="slds-backdrop slds-backdrop--open" id="backGroundSectionId"></div>
+                </div>
+                <!--/apex:outputPanel-->
+                <div id="modalId" style="border:1px; display:none;">                
+                    <div role="dialog" id ="boxId" tabindex="-1" class="slds-modal slds-fade-in-open" aria-labelledby="header43">
+                        <div class="slds-modal__container">
+                            <div class="slds-modal__header">                            
+                                <h2 id="header43" class="slds-text-heading--medium">Field Level Security</h2>
+                            </div>
+                            <div class="slds-modal__content slds-p-around--medium">
+                                <div>
+                                    <table >
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <b>Read Only </b>                                      
+                                                    <c:MultiSelect id="mulPan3" leftLabel=""
+                                                                   leftOption="{!profileList}"
+                                                                   rightLabel=""
+                                                                   rightOption="{!selectedReadOnlyList}"
+                                                                   size="7"
+                                                                   Width="200px"/>
+                                                    <br/><br/>
+                                                </td>	
+                                            </tr>
+                                            <tr>
+                                                <td >
+                                                    <b> Visible </b>                                       
+                                                    <c:MultiSelect id="mulPan4" leftLabel=""	
+                                                                   leftOption="{!profileList}"
+                                                                   rightLabel=""
+                                                                   rightOption="{!selectedVisibleList}"
+                                                                   size="7"
+                                                                   width="200px"/>
+                                                </td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="slds-modal__footer">
+                                <button class="slds-button slds-button--neutral" onclick="return hideModal()">Cancel</button>
+                                <apex:commandButton styleClass="slds-button slds-button--neutral slds-button--brand" value="Save" action="{!applyFLSToAll}"  />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-backdrop slds-backdrop--open" id="backGroundSectionId"></div>
+                </div>
+            </apex:form>  
+        </body>
+    </html>
+</apex:component>

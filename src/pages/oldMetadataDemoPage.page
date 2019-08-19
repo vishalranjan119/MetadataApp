@@ -1,0 +1,25 @@
+<apex:page sidebar="false" controller="CSVReader">
+   <apex:form >
+      <apex:sectionHeader title="Upload data from CSV file"/>
+      <apex:messages />
+      <apex:pageBlock id="fileuploadscreen" >          
+             <center>                 
+                  <apex:inputFile value="{!contentFile}" filename="{!nameFile}" />
+                  <apex:commandButton value="Upload File" action="{!ReadFile}" id="theButton" style="width:70px;" />
+                  <br/> <br/> <font color="red"> <b>Note: Please <a href="https://c.na30.content.force.com/servlet/servlet.FileDownload?file=01536000000WtCx" target="_blank">Click Here</a> to download standard template to upload Accounts.</b> </font>
+             </center> 
+          <apex:pageBlockSection title="Field Created Successfully"  rendered="{!NOT(ISNULL(successFieldList))}">
+               <apex:pageBlockTable value="{!successFieldList}" var="so" title="Following Object is Created:">
+                      <apex:column value="{!so}" headerValue="Field Full Name"/>
+               </apex:pageBlockTable>
+          </apex:pageBlockSection>
+          
+          <apex:pageBlockSection title="Feilds Have Some Error"  rendered="{!NOT(ISNULL(errorFieldList))}">
+               <apex:pageBlockTable value="{!errorFieldList}" var="erKey" >
+                      <apex:column value="{!erKey}" headerValue="Field Full Name"/>
+                      <apex:column value="{!errorFieldList[erKey]}" headerValue="Errors"/>
+               </apex:pageBlockTable>
+          </apex:pageBlockSection>
+	  </apex:pageBlock>       
+   </apex:form>   
+</apex:page>

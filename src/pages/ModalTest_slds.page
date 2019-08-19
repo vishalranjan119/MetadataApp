@@ -1,0 +1,52 @@
+<apex:page controller="CSVReader">
+    <apex:form id="frm1" styleClass="slds">
+        <div role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open" aria-labelledby="header43">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-button--icon-inverse slds-modal__close">                       
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="header43" class="slds-text-heading--medium">Field Level Security</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around--medium">
+                    <div>
+                        <table >
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <b>Read Only </b>                                      
+                                        <c:MultiSelect id="mulPan3" leftLabel=""
+                                                       leftOption="{!profileList}"
+                                                       rightLabel=""
+                                                       rightOption="{!selectedReadOnlyList}"
+                                                       size="7"
+                                                       Width="250px"/>
+                                        <br/><br/>
+                                    </td>	
+                                </tr>
+                                
+                                
+                                <tr>
+                                    <td >
+                                        <b> Visible </b>                                       
+                                        <c:MultiSelect id="mulPan4" leftLabel=""	
+                                                       leftOption="{!profileList}"
+                                                       rightLabel=""
+                                                       rightOption="{!selectedVisibleList}"
+                                                       size="7"
+                                                       width="250px"/>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button--neutral">Cancel</button>
+                    <button class="slds-button slds-button--neutral slds-button--brand">Save</button>
+                </div>
+            </div>
+        </div>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Order</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Orders</value>
+    </caseValues>
+    <fields>
+        <help><!-- Enter the name of the customer as to be printed on the invoice --></help>
+        <label><!-- Customer Name --></label>
+        <name>Customer_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer&apos;s Email --></label>
+        <name>Customer_s_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer&apos;s Mobile Number --></label>
+        <name>Customer_s_Mobile_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Customer&apos;s Notes --></label>
+        <name>Customer_s_Notes__c</name>
+    </fields>
+    <fields>
+        <help><!-- Date and time when the Order was placed --></help>
+        <label><!-- Date of Order --></label>
+        <name>Date_of_Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Delivery Address --></label>
+        <name>Delivery_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- Delivery Date --></label>
+        <name>Delivery_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter the total discount availed in percentage --></help>
+        <label><!-- Discount --></label>
+        <name>Discount__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check if the list of items has been approved --></help>
+        <label><!-- Is Approved --></label>
+        <name>Is_Approved__c</name>
+    </fields>
+    <fields>
+        <help><!-- Select the nearest warehouse from where the order will be fulfilled --></help>
+        <label><!-- Nearest Warehouse --></label>
+        <name>Nearest_Warehouse__c</name>
+        <relationshipLabel><!-- Warehouse --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Order Description --></label>
+        <name>Order_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Payment Type --></label>
+        <name>Payment_Type__c</name>
+        <picklistValues>
+            <masterLabel>Cash</masterLabel>
+            <translation><!-- Cash --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cheque</masterLabel>
+            <translation><!-- Cheque --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DD</masterLabel>
+            <translation><!-- DD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NEFT</masterLabel>
+            <translation><!-- NEFT --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Total Price --></label>
+        <name>Total_Price__c</name>
+    </fields>
+    <fields>
+        <label><!-- Track Order --></label>
+        <name>Track_Order__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

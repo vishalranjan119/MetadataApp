@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Additional_Facilities__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Select the additional facilities availed by the Patient</inlineHelpText>
+        <label>Additional Facilities</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value><fullName>Clothes</fullName><default>false</default><label>Clothes</label></value>
+                <value><fullName>Syringe</fullName><default>false</default><label>Syringe</label></value>
+                <value><fullName>Thermometer</fullName><default>false</default><label>Thermometer</label></value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Addmision_Date_Time__c</fullName>
+        <description>Date and time of Addmission</description>
+        <externalId>false</externalId>
+        <inlineHelpText>&quot;Enter the Date of time of Addmission if available</inlineHelpText>
+        <label>Addmision Date Time</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Current_Bill_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Current Bill Amount</label>
+        <precision>4</precision>
+        <required>true</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Discharge_Date_Time__c</fullName>
+        <description>Date and time of discharge</description>
+        <externalId>false</externalId>
+        <inlineHelpText>&quot;Enter the Date of time of discharge if available</inlineHelpText>
+        <label>Discharge Date Time</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Discount__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the total discount availed in percentage</inlineHelpText>
+        <label>Discount</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Doctor_s_Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Doctor&apos;s Notes</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Gender__c</fullName>
+        <externalId>false</externalId>
+        <label>Gender</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value><fullName>Female</fullName><default>false</default><label>Female</label></value>
+                <value><fullName>Male</fullName><default>false</default><label>Male</label></value>
+                <value><fullName>Others</fullName><default>false</default><label>Others</label></value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Hospital__c</fullName>
+        <displayLocationInDecimal>false</displayLocationInDecimal>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the location of the hospital where the patient is receiving treatment</inlineHelpText>
+        <label>Hospital</label>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Location</type>
+    </fields>
+    <fields>
+        <fullName>Patient_Invoice_Number__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the invoice number of the patient</inlineHelpText>
+        <label>Patient Invoice Number</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Patient_Treatment_History__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Details of patients treatment history</inlineHelpText>
+        <label>Patient Treatment History</label>
+        <length>25000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Relation__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the relation between the attendee and the patient</inlineHelpText>
+        <label>Relation</label>
+        <length>100</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Relative_s_Email__c</fullName>
+        <description>Relative&apos;s Email</description>
+        <externalId>false</externalId>
+        <label>Relative&apos;s Email</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Relative_s_Mobile_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Relative&apos;s Mobile Number</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Relative_s_Name__c</fullName>
+        <description>Relative&apos;s Name</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the name of the relative attending the patient</inlineHelpText>
+        <label>Relative&apos;s Name</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Patient</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Patient Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Patients</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

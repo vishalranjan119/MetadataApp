@@ -1,0 +1,128 @@
+<apex:page controller="BulkFieldUpdatorController" sidebar="false">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <apex:stylesheet value="{!URLFOR($Resource.SLDS202, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+            <script>
+            function alertUser(fieldType) {
+                var str=document.getElementById(fieldType).value;
+                if(str=="Location"){
+                    confirm('Can not Change Field type From Location');
+                }
+                else{
+                    if(confirm  ('Changing the Field type will delete all the Existing data')){
+                        changeStructure();
+                    }
+                    else{
+                        initialState();
+                    }
+                }
+                return;   
+            }
+            </script>
+             <style type="text/css">
+            	.slds .slds-table th {
+                    font-weight: bolder;
+                }
+            </style>
+        </head>
+        <body>
+            <apex:form styleClass="slds">
+                <apex:actionFunction action="{!changeStructure}" name="changeStructure" />
+                <apex:actionFunction action="{!initialState}" name="initialState" />
+                <div class="slds-page-header" role="banner" style="background-color:#005FB2">
+                    <div class="slds-media slds-media--center">
+                        <div class="slds-media__figure">
+                            <svg aria-hidden="true" class="slds-icon">
+                                <use xlink:href="{!URLFOR($Resource.SLDS202, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+                            </svg>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__title slds-truncate slds-align-middle" title="Bulk Update" style="color:#ffffff">
+                                Bulk Field Update Page
+                            </p>      
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-page-header" role="banner">
+                    <div class="slds-grid" >    
+                        <div class="slds-col slds-no-flex slds-grid slds-align-bottom">      
+                            <div class="slds-form-element" >
+                                <label class="slds-form-element__label" for="select-01" style="font-size:20px">Select Object</label>
+                                <div class="slds-form-element__control" >
+                                    <div class="slds-select_container">
+                                        <apex:selectList id="select-01" title="Object Name" value="{!selectedObject}" size="1" styleClass="slds-select">
+                                            <apex:selectOptions value="{!objNames}">
+                                            </apex:selectOptions>
+                                        </apex:selectList>
+                                    </div>
+                                    <apex:commandButton action="{!createEditStructure}" value="Access Fields" styleClass="slds-button slds-button--neutral" style="margin-top:5px; border-radius: 5px;"/>
+                                    <apex:commandButton action="{!updateMetadata}" value="Save" disabled="{!NOT(isRerenderSave)}" styleClass="slds-button slds-button--neutral"/>
+                                </div>                        
+                            </div>                    
+                        </div>
+                    </div>
+                </div>
+                <apex:pagemessages />
+                <apex:outputPanel id="RefreshTable" style="overflow: scroll; text-align:center; text-align:center" rendered="{!isRerenderSave}">
+                    <table  class="slds-table slds-table--bordered" cellspacing="0" id="table1" width="100%">
+                        <thaed>
+                            <tr class="slds-text-heading--label">
+                                <apex:outputPanel rendered="{!isUpdateMetadataCalled}">
+                                    <th class="slds-is-sortable slds-is-resizable" scope="col">Result</th>
+                                    <th class="slds-is-sortable slds-is-resizable" scope="col">Error Message</th>
+                                </apex:outputPanel>
+                                <apex:repeat value="{!tableHeader}" var="th">
+                                <th class="slds-is-sortable slds-is-resizable" scope="col">
+                                    <div class="slds-th__action slds-text-link--reset"><span class="slds-truncate" title="{!th}">{!th}</span></div>                                        
+                                </th>
+                                </apex:repeat>
+                            </tr>
+                        </thaed>
+                        <tbody>
+                            <apex:repeat value="{!dsList}" var="ds">
+                                <tr class="slds-hint-parent">
+                                    <td class="slds-truncate" scope="row">
+                                        <apex:inputCheckbox id="check" value="{!ds.isUpdatable}" styleClass="checkboxStyle">
+                                            <apex:actionSupport event="onchange" reRender="RefreshTable"/>
+                                        </apex:inputCheckbox> 
+                                    </td>
+                                    <apex:outputPanel rendered="{!isUpdateMetadataCalled}">
+                                        <td class="slds-truncate" scope="row"><apex:outputText value="{!ds.result}" /></td>
+                                        <td class="slds-truncate" scope="row"><apex:outputText value="{!ds.errorMsg}"/></td>
+                                    </apex:outputPanel>
+                                    <td class="slds-truncate" scope="row">
+                                        <apex:selectList id="test" value="{!ds.changedDataType}" onchange="alertUser('{!$Component.fieldType}')" size="1" disabled="{!NOT(ds.isUpdatable)}" rendered="{!ds.fieldType!='Location'}" styleClass="form-control inputTextBox columnWidthAuto" style="vertical-align:middle;background-color:{!IF(ds.isUpdatable,'','#DCDCDC')}">
+                                            <apex:selectOptions value="{!dataTypeOptions}">
+                                            </apex:selectOptions>
+                                            <apex:inputhidden id="fieldType" value="{!ds.fieldType}"></apex:inputhidden>
+                                            <!--apex:actionSupport event="onchange" action="{!changeStructure}" id="RefreshTable2" ></apex:actionSupport-->
+                                        </apex:selectList>
+                                        <apex:inputText value="{!ds.fieldType}" disabled="true" rendered="{!ds.fieldType=='Location'}"/>
+                                    </td>
+                                    <td class="slds-truncate" scope="row"><apex:inputText value="{!ds.fieldLabel}" disabled="{!NOT(ds.isUpdatable)}" styleClass="form-control inputTextBox columnWidthAuto"/></td>
+                                    <td class="slds-truncate" scope="row"><apex:inputText value="{!ds.fieldName}" disabled="{!NOT(ds.isUpdatable)}" styleClass="form-control inputTextBox columnWidthAuto" style="vertical-align:middle" /></td>
+                                    <td class="slds-truncate" scope="row"><apex:inputText value="{!ds.length}" disabled="{!(ISNULL(ds.length) || NOT(ds.isUpdatable) ) }" styleClass="form-control inputTextBox columnWidthMinimum requiredBlock" /></td>
+                                    <td class="slds-truncate" scope="row"><apex:inputText value="{!ds.decimalPlace}" disabled="{!(ISNULL(ds.decimalPlace) || NOT(ds.isUpdatable)) }" styleClass="form-control inputTextBox columnWidthMinimum" /></td>
+                                    <td class="slds-truncate" scope="row"><apex:inputText value="{!ds.visibleLines}" disabled="{!(ISNULL(ds.visibleLines) || NOT(ds.isUpdatable))}" styleClass="form-control inputTextBox columnWidthMinimum"/></td>
+                                    <td class="slds-truncate" scope="row"><apex:inputTextArea value="{!ds.picklistValue}" disabled="{!(ISNULL(ds.picklistValue) || NOT(ds.isUpdatable))}" styleClass="inputTextArea form-control" /></td>
+                                    <td class="slds-truncate" scope="row"><apex:inputCheckbox value="{!ds.picklistSorted}" disabled="{!(ISNULL(ds.picklistSortedCheck)|| NOT(ds.isUpdatable))}" styleClass="columnWidthMinimum checkboxStyle"/></td>
+                                    <td class="slds-truncate" scope="row"><apex:inputText value="{!ds.fieldDefaultValue}" disabled="{!(ISNULL(ds.fieldDefaultValue) || NOT(ds.isUpdatable))}"  styleClass="form-control inputTextBox"/></td>
+                                    <td class="slds-truncate" scope="row"><apex:inputCheckbox value="{!ds.required}" disabled="{!(ISNULL(ds.requiredCheck) || NOT(ds.isUpdatable))}" styleClass="columnWidthMinimum checkboxStyle"/></td>
+                                    
+                                    <td class="slds-truncate" scope="row"><apex:inputCheckbox value="{!ds.externalId}" disabled="{!(ISNULL(ds.externalIdCheck) || NOT(ds.isUpdatable))}" styleClass="columnWidthMinimum checkboxStyle"/></td>
+                                    <td class="slds-truncate" scope="row"><apex:inputCheckbox value="{!ds.unique}" disabled="{!(ISNULL(ds.uniqueCheck) || NOT(ds.isUpdatable))}"  styleClass="columnWidthMinimum checkboxStyle"/></td>
+                                    <td class="slds-truncate" scope="row"><apex:inputText value="{!ds.relatedToObject}" disabled="{!(ISNULL(ds.lookupFieldCheck) || NOT(ds.isUpdatable))}"  styleClass="form-control inputTextBox columnWidthAuto" /></td>
+                                    <td class="slds-truncate" scope="row"><apex:inputText value="{!ds.childRelationshipName}" disabled="{!(ISNULL(ds.lookupFieldCheck) || NOT(ds.isUpdatable))}" styleClass="form-control inputTextBox columnWidthAuto" /></td>
+                                    <td class="slds-truncate" scope="row"><apex:inputText value="{!ds.relatedListLabel}" disabled="{!(ISNULL(ds.lookupFieldCheck)||NOT(ds.isUpdatable))}"/></td>
+                                    
+                                    <td class="slds-truncate" scope="row"><apex:inputTextarea value="{!ds.helpText}" disabled="{! NOT(ds.isUpdatable)}" /></td>
+                                    
+                                </tr>
+                            </apex:repeat>
+                        </tbody>
+                    </table>
+                </apex:outputPanel>
+            </apex:form>
+        </body>
+    </html>    
+</apex:page>

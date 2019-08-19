@@ -1,0 +1,84 @@
+<apex:page controller="BulkFieldDeletorController" sidebar="false">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>          
+            <apex:stylesheet value="{!URLFOR($Resource.SLDS202, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+            <script>
+            
+            function hideModal(){
+                document.getElementById("modalId").style.display = "none";
+                return false;
+            }
+            </script>
+        </head>
+        <body>
+            <apex:form styleClass="slds">
+                <div id="modalId" >                
+                    <div role="dialog" id ="boxId" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal--large" aria-labelledby="header43">
+                        <div class="slds-modal__container">
+                            <div class="slds-modal__header" style="display:{!IF(isDeleted, 'none','block')}">
+                                <h2 id="header43" class="slds-text-heading--medium">Are you sure you want to delete the following fields?</h2>
+                            </div>
+                            <div class="slds-modal__header" style="display:{!IF(isDeleted, 'block','none')}">
+                                <h2 id="header43" class="slds-text-heading--medium">Final Result</h2>                                
+                            </div>              
+                            <div class="slds-modal__content" style="display:{!IF(isDeleted, 'block','none')};align:left;padding:10px;">
+                                    <apex:outputText value="Download Files from here" style="font-weight: bold;"/>
+                                    
+                                    <br/>
+                                    <apex:outputText value="Successful Records: "/>
+                                    <apex:commandLink action="{!DownloadSuccessExcel}" value="{!successListSize} Records"/>
+                                    
+                                    <br/>
+                                    <apex:outputText value="Failed Records: "/>
+                                    <apex:commandLink action="{!DownloadErrorExcel}" value="{!errorListSize} Records"/>
+                                    <br/>                                                                       
+                            </div>
+                            <div class="slds-modal__content slds-p-around--medium">
+                                <div>
+                                    <table class="slds-table slds-table--bordered slds-align-centre" cellspacing="0" >
+                                        <thead>
+                                            <tr class="slds-text-heading--label">
+                                                <th scope="col"><div class="slds-truncate" title="S.No.">S.No.</div></th>
+                                                <th scope="col"><div class="slds-truncate" title="Field Label">Field Label</div></th>
+                                                <th scope="col"><div class="slds-truncate" title="Field Name">Field Name</div></th>
+                                                <th scope="col"><div class="slds-truncate" title="Field Type">Field Type</div></th>
+                                                <apex:outputPanel rendered="{!isDeleted}">
+                                                    <th scope="col"><div class="slds-truncate" title="Result">Result</div></th>
+                                                	<th scope="col"><div class="slds-truncate" title="Message">Message</div></th>
+                                                </apex:outputPanel>                                               
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:variable value="1" var="rowNum"/>
+                                            <apex:repeat value="{!dsListToDelete}" var="ds">
+                                                <tr id="row_{!rowNum}" class="slds-hint-parent">
+                                                    <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!rowNum}"/></td>
+                                                    <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!ds.fieldLabel}"/></td>
+                                                    <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!ds.fieldName}"/></td>
+                                                    <td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!ds.fieldType}"/></td>
+                                                    <apex:outputPanel rendered="{!isDeleted}">
+                                                    	<td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!ds.result}"/></td>
+                                                    	<td class="slds-truncate" scope="row" style="vertical-align: middle;"><apex:outputtext value="{!ds.errorMsg}"/></td>
+                                                    </apex:outputPanel>
+                                                </tr>
+                                                <apex:variable var="rowNum" value="{!VALUE(rowNum) + 1}"/>
+                                            </apex:repeat>
+                                        </tbody>
+                                    </table>                                                           
+                                </div>
+                            </div>
+                            <div class="slds-modal__footer" style="display:{!IF(isDeleted, 'none','block')}">
+                                <apex:commandButton styleClass="slds-button slds-button--neutral" value="Cancel" action="{!goToFirstPage}"/>
+                                <apex:commandButton styleClass="slds-button slds-button--neutral slds-button--brand" value="Delete" action="{!deleteSelectedField}" />
+                            </div>
+                           <div class="slds-modal__footer" style="display:{!IF(isDeleted, 'block','none')}">
+                               <apex:commandButton styleClass="slds-button slds-button--neutral slds-button--brand" value="Exit" action="{!goToFirstPage}"/>
+                           </div>
+                        </div>
+                    </div>
+                    <div class="slds-backdrop slds-backdrop--open" id="backGroundSectionId"></div>
+                </div>                
+            </apex:form>            
+        </body>
+    </html>
+</apex:page>

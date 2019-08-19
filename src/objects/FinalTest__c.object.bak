@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>false</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>CheckboxField__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Checbox Field Description</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Checkox Field Help Text</inlineHelpText>
+        <label>CheckboxField</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>CurrencyField__c</fullName>
+        <description>Currency Field Description</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Currency Help Text</inlineHelpText>
+        <label>CurrencyField</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>DateTimeField__c</fullName>
+        <description>DateTime Field Description</description>
+        <externalId>false</externalId>
+        <inlineHelpText>DateTime Help Text</inlineHelpText>
+        <label>DateTimeField</label>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>EmailField__c</fullName>
+        <description>Email Field Description</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Email Help Text</inlineHelpText>
+        <label>EmailField</label>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LocationField__c</fullName>
+        <description>Geolocation Field Description</description>
+        <displayLocationInDecimal>false</displayLocationInDecimal>
+        <externalId>false</externalId>
+        <inlineHelpText>Geolocation Help Text</inlineHelpText>
+        <label>LocationField</label>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Location</type>
+    </fields>
+    <fields>
+        <fullName>MultiselectPicklistField__c</fullName>
+        <description>Text Multi Picklist Description</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Mutlipicklist Help Text</inlineHelpText>
+        <label>MultiselectPicklistField</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value><fullName>pick1</fullName><default>false</default><label>pick1</label></value>
+                <value><fullName>pick2</fullName><default>false</default><label>pick2</label></value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>PercentField__c</fullName>
+        <description>Percent Field Description</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Percent Help Text</inlineHelpText>
+        <label>PercentField</label>
+        <precision>16</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>PicklistField__c</fullName>
+        <description>Text Picklist Description</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Picklist Help Text</inlineHelpText>
+        <label>PicklistField</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value><fullName>pick1</fullName><default>false</default><label>pick1</label></value>
+                <value><fullName>pick2</fullName><default>false</default><label>pick2</label></value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>TextAreaField__c</fullName>
+        <description>TextArea Field Description</description>
+        <externalId>false</externalId>
+        <inlineHelpText>TextArea Help Text</inlineHelpText>
+        <label>TextAreaField</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <label>FinalTest</label>
+    <nameField>
+        <label>FinalTest Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>FinalTest</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

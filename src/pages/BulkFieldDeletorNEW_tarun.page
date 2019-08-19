@@ -1,0 +1,187 @@
+<apex:page controller="BulkFieldDeletorController" sidebar="false">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <apex:stylesheet value="{!URLFOR($Resource.SLDS202, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+            <apex:includeScript value="{!$Resource.Jquery}"/>
+            <apex:includeScript value="{!URLFOR($Resource.Bootstrap,'bootstrap-3.3.6-dist/js/bootstrap.min.js')}"/>
+            <script>
+            function changeStateOfcheckbox(ele){
+                var checkboxes = document.getElementsByTagName('input');
+                if (ele.checked) {
+                    for (var i = 0; i < checkboxes.length; i++) {
+                        console.debug(checkboxes[i].id);
+                        if (checkboxes[i].type == 'checkbox' && checkboxes[i].id.includes("allCheckboxes")) {
+                            checkboxes[i].checked = true;
+                        }
+                    }
+                } else {
+                    for (var i = 0; i < checkboxes.length; i++) {                        
+                        if (checkboxes[i].type == 'checkbox' && checkboxes[i].id.includes("allCheckboxes")) {
+                            checkboxes[i].checked = false;
+                        }
+                    }
+                }
+            }
+            function move() {
+                document.getElementById("progressBar").style.display = "block";
+                  var elem = document.getElementById("myBar");
+                  var width = 0;
+                  var id = setInterval(frame, 50);
+                  function frame() {
+                    if (width >= 100) {
+                      clearInterval(id);
+                    } else {
+                      width++;
+                      elem.style.width = width + '%';
+                      elem.textContent=width + '%';
+                    }
+                  }
+                }
+            </script>
+            <style type="text/css">
+            	.slds .slds-table th {
+                    font-weight: bolder;
+                }
+                .outerDivPB{
+                	width: 100%; 
+                	height: 1.4em; 
+                	position: relative;
+                	background-color: #f1f1f1;
+                	border-radius: 4px!important; 
+                	margin-top:5px; 
+                	display:none;
+                }
+                .innerDivPB{
+                	width:0%;
+                	color: #fff!important;
+                	background-color: #4CAF50!important; 
+                	background-color: #757575; 
+                	height: 100%;   
+                	position: absolute;    
+                	line-height: inherit;
+                	text-align:center;
+                	border-radius:10px;
+                }
+            </style>
+            
+        </head>
+        <body>
+            <apex:form styleClass="slds">    
+                <apex:pagemessages />
+                <div>
+                    <div class="slds-page-header" role="banner" style="background-color:#005FB2">
+                        <div class="slds-media slds-media--center">
+                            <div class="slds-media__figure">
+                                <svg aria-hidden="true" class="slds-icon">
+                                    <use xlink:href="{!URLFOR($Resource.SLDS202, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+                                </svg>
+                            </div>
+                            <div class="slds-media__body">
+                                <p class="slds-page-header__title slds-truncate slds-align-middle" title="Bulk Delete" style="color:#ffffff">
+                                    Bulk Delete Field Page
+                                </p>      
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-page-header" role="banner">
+                        <div class="slds-grid" >    
+                            <div class="slds-col slds-no-flex slds-grid slds-align-bottom">      
+                                <div class="slds-form-element" >
+                                    <label class="slds-form-element__label" for="select-01" style="font-size:20px">Select Object</label>
+                                    <div class="slds-form-element__control" >
+                                        <div class="slds-select_container">
+                                            <apex:selectList id="select-01" title="Object Name" value="{!selectedObject}" size="1" styleClass="slds-select">
+                                                <apex:selectOptions value="{!objNames}">
+                                                </apex:selectOptions>
+                                            </apex:selectList>
+                                        </div>
+                                        <apex:commandButton action="{!createDataStructur}" value="Access Fields" styleClass="slds-button slds-button--neutral" style="margin-top:5px; border-radius: 5px;"/>
+                                    </div>                        
+                                </div>                    
+                            </div>
+                            
+                        </div>
+                        <div id="progressBar" class="outerDivPB">                                       
+								<div id="myBar" class="innerDivPB"></div>
+						</div>
+                    </div>
+                </div>
+                
+                <apex:outputPanel styleClass="divAll container4" rendered="{!isObjectSelected}">                                        
+                    <table id="RefreshTable" class="slds-table slds-table--bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="slds-text-heading--label">
+                                <th class="slds-is-sortable slds-is-resizable" scope="col">
+                                    <div class="slds-th__action slds-text-link--reset">
+                                        <span class="slds-truncate">S.No.</span>
+                                    </div>
+                                </th>
+                                <th class="slds-is-sortable slds-is-resizable" scope="col">
+                                    <div class="slds-th__action slds-text-link--reset">
+                                        <span class="slds-truncate">
+                                            <apex:inputCheckbox onchange="changeStateOfcheckbox(this)" />
+                                              
+                                           
+                                        </span>
+                                    </div>
+                                </th>
+                                <th class="slds-is-sortable slds-is-resizable" scope="col">
+                                    <div class="slds-th__action slds-text-link--reset">
+                                        <span class="slds-truncate">Field Label</span>
+                                    </div>
+                                </th>
+                                <th class="slds-is-sortable slds-is-resizable" scope="col">
+                                    <div class="slds-th__action slds-text-link--reset">
+                                        <span class="slds-truncate">Field Name</span>
+                                    </div>
+                                </th>
+                                <th class="slds-is-sortable slds-is-resizable" scope="col">
+                                    <div class="slds-th__action slds-text-link--reset">
+                                        <span class="slds-truncate">Field Type</span>
+                                    </div>
+                                </th>
+                                <th class="slds-is-sortable slds-is-resizable" scope="col">
+                                    <div class="slds-th__action slds-text-link--reset">
+                                        <span class="slds-truncate">Unique</span>
+                                    </div>
+                                </th>
+                                <th class="slds-is-sortable slds-is-resizable" scope="col">
+                                    <div class="slds-th__action slds-text-link--reset">
+                                        <span class="slds-truncate">External Id</span>
+                                    </div>
+                                </th>
+                                <th class="slds-is-sortable slds-is-resizable" scope="col">
+                                    <div class="slds-th__action slds-text-link--reset">
+                                        <span class="slds-truncate">Count</span>
+                                    </div>
+                                </th>
+                                
+                            </tr>
+                        </thead>                                               
+                        <tbody>
+                            <apex:variable value="1" var="rowNum"/>
+                            <apex:repeat value="{!dsList}" var="ds">
+                                <tr class="slds-hint-parent">
+                                    <td class="slds-truncate" scope="row"><apex:outputtext value="{!rowNum}"/></td>
+                                    <td class="slds-truncate" scope="row"><apex:inputCheckbox value="{!ds.isDeletable}" id="allCheckboxes"/></td>
+                                    <td class="slds-truncate" scope="row"><apex:outputLabel value="{!ds.fieldLabel}" /></td>
+                                    <td class="slds-truncate" scope="row"><apex:outputLabel value="{!ds.fieldName}"/></td>
+                                    <td class="slds-truncate" scope="row"><apex:outputLabel value="{!ds.fieldType}" /></td>
+                                    <td class="slds-truncate" scope="row"><apex:inputCheckbox value="{!ds.unique}" disabled="true" rendered="{!NOT(isgetdsListCalled)}"/></td>
+                                    <td class="slds-truncate" scope="row"><apex:inputCheckbox value="{!ds.externalId}" disabled="true"/></td>
+                                    <td class="slds-truncate" scope="row"><apex:outputtext value="{!ds.count1}" /></td>                     
+                                </tr>
+                                <apex:variable var="rowNum" value="{!VALUE(rowNum) + 1}"/>
+                            </apex:repeat>
+                        </tbody>
+                    </table>
+                    <apex:outputText value="*Values as on {!fetchLastModifiedDate}" styleClass="outputText"/>                    
+                    <div align="center" style="margin-top:10px;">
+                        <apex:commandButton action="{!goToSecondPage}" value="Delete Selected Fields"  rendered="{!isObjectSelected}"  styleClass="slds-button slds-button--neutral" />
+                        <apex:commandButton action="{!analyseFields}" value="Populate Count" styleClass="slds-button slds-button--neutral" rendered="{!isObjectSelected}" onclick="move();this.disabled='true'"/>
+                    </div>
+                </apex:outputPanel>
+            </apex:form>
+        </body>
+    </html>
+</apex:page>

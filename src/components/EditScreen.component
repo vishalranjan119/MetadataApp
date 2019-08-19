@@ -1,0 +1,166 @@
+<apex:component controller="CSVReader" >
+    <apex:stylesheet value="{!URLFOR($Resource.SLDS202, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.DataTableNew,'DataTablesNew/media/css/jquery.dataTables.css')}"/>
+    <apex:stylesheet value="{!$Resource.dataTablesFixedHeadersCSS}"/>
+    <apex:includeScript value="{!$Resource.Jquery}"/>   
+    <apex:includeScript value="{!$Resource.JqueryDataTableJS}"/>
+    <apex:includeScript value="{!$Resource.dataTablesFixedHeadersMINJS}"/>
+    
+    
+    <script type="text/javascript">    
+    function alertUser() {
+        if(confirm ('Changing the field type will delete the current values')){
+            changeStructure();
+        }
+        else{
+            initialState();
+        }
+        
+    }
+    function showModal(){
+        document.getElementById("fieldlevelsecurityPageId").style.display = "block";
+        return false;
+    }
+    var $j = jQuery.noConflict();    
+    $j(document).ready(function() {
+        var table = $j('#table1').DataTable({
+            ordering: false,
+            searching: false,
+            fixedHeader: true,
+            paging: false
+        });
+        
+        $j("#contentWrapper").width("3040px");
+        
+        $j("#table1 tbody tr").each( function (i) {
+            $j(this).hover(function() {
+                var rowId = $j(this).attr("id");
+                $j(this).attr( "title", 
+                              $j(this).find('#'+rowId+'_objectName select option:selected').first().text()
+                              +"."+ 
+                              $j(this).find('#'+rowId+'_fieldName input').val());
+            });
+        });
+    });    
+    </script>
+    <style>
+        .slds .slds-text-link--reset {
+        cursor: text;
+        }
+        .slds .slds-table th {
+        font-weight: bolder;
+        }
+        
+    </style>
+    <apex:form id="frm1" styleClass="slds">
+        
+        
+        
+        <apex:actionFunction action="{!changeStructure}" name="changeStructure"/>
+        <apex:actionFunction action="{!initialState}" name="initialState"/>
+        <div class="slds-page-header" role="banner" style="background-color:#005FB2">
+            <div class="slds-media slds-media--center">
+                <div class="slds-media__figure">
+                    <svg aria-hidden="true" class="slds-icon">
+                        <!--use xlink:href="{!URLFOR($Resource.SLDS202, '/assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use-->
+                    </svg>
+                </div>
+                <div class="slds-media__body">
+                    <p class="slds-page-header__title slds-truncate slds-align-middle" title="Here is your Data, Let's have a look!" style="color:#ffffff">
+                        Here is your Data, Let's have a look ! 
+                    </p>      
+                </div>
+            </div>
+        </div>                
+        
+        <div class="slds-page-header" role="banner">
+            <div class="slds-grid">    
+                <div class="slds-col slds-no-flex slds-grid slds-align-bottom">      
+                    <div class="slds-button-group" role="group" style="padding:10px">
+                        <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!validate}" value="Validate" style="margin:10px;height:35px; width:100px; border-radius: 5px"/>
+                        <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!ExportDataInCSVFile}" value="Export Data" style="margin:10px; height:35px; width:100px; border-radius: 5px"/>
+                        
+                        <apex:commandButton styleClass="slds-button slds-button--neutral" action="{!goToFileUploadPage}" value="Cancel" style="margin:10px;height:35px; width:100px; border-radius: 5px"/>
+                        <apex:commandButton styleClass="slds-button slds-button--neutral" onclick="showModal()" value="Next" style="margin:10px; height:35px; width:100px; border-radius: 5px"/>
+                    </div>
+                </div>
+            </div>
+            <apex:commandLink styleClass="margin:10px" action="{!goToReviewPage}" value="Click here to go to Review Page" style="margin: 0px 0px 40px 20px"/>
+        </div>                
+        
+        <apex:pagemessages />
+        <!--apex:outputPanel id="datatable"-->
+        <!--div-->
+        <table id="table1" class="slds-table slds-table--bordered" cellspacing="0" >
+            <thead>
+                <tr class="slds-text-heading--label">                                    
+                    <apex:repeat value="{!tableHeader}" var="th">
+                        <th class="slds-is-sortable slds-is-resizable" scope="col">
+                            <div class="slds-th__action slds-text-link--reset"><span class="slds-truncate" title="{!th}">{!th}</span></div>
+                            <!--a href="javascript:void(0);" class="slds-th__action slds-text-link--reset">
+
+</a-->                                            
+                        </th>
+                    </apex:repeat>                                             
+                </tr>
+            </thead>                            
+            <tbody>                                
+                <apex:variable value="1" var="rowNum"/>
+                <apex:repeat value="{!dsList}" var="ds">
+                    <tr id="row_{!rowNum}" class="slds-hint-parent">
+                        <td class="slds-truncate" scope="row">
+                            <apex:commandLink value="Del" action="{!onClickDelete}">
+                                <apex:param name="index" value="{!rowNum}"/>
+                            </apex:commandLink>
+                        </td>
+                        
+                        <td class="slds-truncate" scope="row"><apex:outputtext value="{!rowNum}"/></td>
+                        
+                        <td class="slds-truncate" scope="row" id="row_{!rowNum}_objectName">
+                            <apex:selectList value="{!ds.objectName}" size="1">
+                                <apex:actionSupport event="onchange" action="{!changeStructure}" reRender="mulPan1"/>
+                                <apex:selectOptions value="{!allSobjects}"/>
+                            </apex:selectList>
+                        </td>
+                        
+                        <td class="slds-truncate" scope="row">
+                            <apex:selectList value="{!ds.changedDataType}" onchange="alertUser()" size="1">
+                                <apex:selectOptions value="{!dataTypeOptions}"/>
+                                <apex:inputhidden id="fieldType" value="{!ds.fieldType}"></apex:inputhidden>
+                            </apex:selectList>
+                        </td>
+                        
+                        <td class="slds-truncate" scope="row"><apex:inputText value="{!ds.fieldLabel}" styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ds.errorMap[6],'#FFE5E5','#FFFF99')}; border-style: solid;  border-left-color:#FF5555; border-left-width:5px;"/></td>
+                        <td class="slds-truncate" scope="row" id="row_{!rowNum}_fieldName"><apex:inputText value="{!ds.fieldName}" styleClass="inputTextBox columnWidthAuto" style="vertical-align:middle;background-color:{!IF(ds.errorMap[7],'#FFE5E5','#FFFF99')}; border-style: solid;  border-left-color:#FF5555; border-left-width:5px;"  /></td>
+                        <td class="slds-truncate" scope="row"><apex:inputText disabled="{!ISNULL(ds.length)}" value="{!ds.length}" styleClass="inputTextBox columnWidthMinimum" style="background-color:{!IF(ISNULL(ds.length), '#DCDCDC', IF(ds.errorMap[8],'#FFE5E5','#FFFF99'))}; border-style: {!IF (ds.length!=NULL,'solid;  border-left-color:#FF5555; border-left-width:5px','')};"/></td>
+                        <td class="slds-truncate" scope="row"><apex:inputText value="{!ds.decimalPlace}" disabled="{!ISNULL(ds.decimalPlace)}" styleClass="inputTextBox columnWidthMinimum" style="background-color:{!IF(ISNULL(ds.decimalPlace),'#DCDCDC', IF(ds.errorMap[9],'#FFE5E5','#FFFF99'))};border-style: {!IF (ds.decimalPlace!=NULL,'solid;  border-left-color:#FF5555; border-left-width:5px','')};" /></td>
+                        <td class="slds-truncate" scope="row"><apex:inputText value="{!ds.visibleLines}" disabled="{!ISNULL(ds.visibleLines)}" styleClass="inputTextBox columnWidthMinimum" style="background-color:{!IF(ISNULL(ds.visibleLines),'#DCDCDC', IF(ds.errorMap[10],'#FFE5E5','#FFFF99'))}; border-style: {!IF (ds.visibleLines!=NULL,'solid;  border-left-color:#FF5555; border-left-width:5px','')};"/></td>
+                        <td class="slds-truncate" scope="row"><apex:inputTextArea value="{!ds.picklistValue}" disabled="{!ISNULL(ds.picklistValue)}" styleClass="inputTextArea" style="background-color:{!IF(ISNULL(ds.picklistValue),'#DCDCDC', IF(ds.errorMap[11],'#FFE5E5','#FFFF99'))}; border-style: {!IF (ds.picklistValue!=NULL,'solid;  border-left-color:#FF5555; border-left-width:5px','')};" /></td>
+                        <td class="slds-truncate" scope="row"><apex:inputCheckbox value="{!ds.picklistSorted}" disabled="{!ISNULL(ds.picklistSortedCheck)}" styleClass="columnWidthMinimum checkboxStyle" style="background-color:{!IF(ds.errorMap[12],'#FFE5E5','#FFFF99')}"/></td>
+                        <td class="slds-truncate" scope="row"><apex:inputText value="{!ds.fieldDefaultValue}" disabled="{!ISNULL(ds.fieldDefaultValue)}"  styleClass="inputTextBox" style="background-color:{!IF(ISNULL(ds.fieldDefaultValue),'#DCDCDC',IF(ds.errorMap[13],'#FFE5E5','#FFFF99'))}"/></td>
+                        <td class="slds-truncate" scope="row"><apex:inputCheckbox value="{!ds.required}" disabled="{!ISNULL(ds.requiredCheck)}" styleClass="columnWidthMinimum checkboxStyle" style="background-color:{!IF(ds.errorMap[14],'#FFE5E5','#FFFF99')}"/></td>
+                        <td class="slds-truncate" scope="row"><apex:inputCheckbox value="{!ds.trackFeedHistory}" styleClass="columnWidthMinimum checkboxStyle" style="background-color:{!IF(ds.errorMap[15],'#FFE5E5','#FFFF99')}"/></td>
+                        <td class="slds-truncate" scope="row"><apex:inputCheckbox value="{!ds.externalId}" disabled="{!ISNULL(ds.externalIdCheck)}" styleClass="columnWidthMinimum checkboxStyle" style="background-color:{!IF(ds.errorMap[16],'#FFE5E5','#FFFF99')}"/></td>
+                        <td class="slds-truncate" scope="row"><apex:inputCheckbox value="{!ds.unique}" disabled="{!ISNULL(ds.uniqueCheck)}"  styleClass="columnWidthMinimum checkboxStyle" style="background-color:{!IF(ds.errorMap[17],'#FFE5E5','#FFFF99')}"/></td>
+                        <td class="slds-truncate" scope="row" id="row_{!rowNum}_objectName"><apex:selectList value="{!ds.relatedToObject}" size="1" disabled="{!ISNULL(ds.lookupFieldCheck)}">
+                            <apex:selectOptions value="{!allSobjects}"/>
+                            </apex:selectList>
+                        </td>                                
+                        <td class="slds-truncate" scope="row"><apex:inputText value="{!ds.childRelationshipName}" disabled="{!ISNULL(ds.lookupFieldCheck)}"  styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ISNULL(ds.lookupFieldCheck),'#DCDCDC',IF(ds.errorMap[19],'#FFE5E5','#FFFF99'))}; border-style: {!IF (ds.childRelationshipName!=NULL,'solid;  border-left-color:#FF5555; border-left-width:5px','')};" /></td>
+                        <td class="slds-truncate" scope="row"><apex:inputText value="{!ds.relatedListLabel}" disabled="{!ISNULL(ds.lookupFieldCheck)}"  styleClass="inputTextBox columnWidthAuto" style="background-color:{!IF(ISNULL(ds.lookupFieldCheck),'#DCDCDC',IF(ds.errorMap[20],'#FFE5E5','#FFFF99'))}; border-style: {!IF (ds.relatedListLabel!=NULL,'solid;  border-left-color:#FF5555; border-left-width:5px','')};"/></td>
+                        <td class="slds-truncate" scope="row"><apex:inputTextarea value="{!ds.Description}" styleClass="inputTextArea columnWidthAuto" style="background-color:{!IF(ds.errorMap[21],'#FFE5E5','#FFFF99')}"/></td>
+                        <td class="slds-truncate" scope="row"><apex:inputTextarea value="{!ds.helpText}" styleClass="inputTextArea columnWidthAuto" style="background-color:{!IF(ds.errorMap[22],'#FFE5E5','#FFFF99')}"/></td>
+                        
+                    </tr>
+                    <apex:variable var="rowNum" value="{!VALUE(rowNum) + 1}"/>
+                </apex:repeat>
+                
+            </tbody>
+        </table>
+        <div style="text-align:left;">
+            <apex:commandLink style="font-size:larger; background-image:url('{!URLFOR($Resource.images, 'images/add_row.gif')}'); background-repeat: no-repeat; background-size: contain; padding-left: 20px;" value="click here to Add new Row " action="{!addNewRowInTable}"/>
+        </div>
+        <!--/div-->
+        <!--/apex:outputPanel-->
+    </apex:form>
+</apex:component>

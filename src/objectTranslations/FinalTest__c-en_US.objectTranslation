@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>FinalTest</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>FinalTest</value>
+    </caseValues>
+    <fields>
+        <help><!-- Checkox Field Help Text --></help>
+        <label><!-- CheckboxField --></label>
+        <name>CheckboxField__c</name>
+    </fields>
+    <fields>
+        <help><!-- Currency Help Text --></help>
+        <label><!-- CurrencyField --></label>
+        <name>CurrencyField__c</name>
+    </fields>
+    <fields>
+        <help><!-- DateTime Help Text --></help>
+        <label><!-- DateTimeField --></label>
+        <name>DateTimeField__c</name>
+    </fields>
+    <fields>
+        <help><!-- Email Help Text --></help>
+        <label><!-- EmailField --></label>
+        <name>EmailField__c</name>
+    </fields>
+    <fields>
+        <help><!-- Geolocation Help Text --></help>
+        <label><!-- LocationField --></label>
+        <name>LocationField__c</name>
+    </fields>
+    <fields>
+        <help><!-- Mutlipicklist Help Text --></help>
+        <label><!-- MultiselectPicklistField --></label>
+        <name>MultiselectPicklistField__c</name>
+        <picklistValues>
+            <masterLabel>pick1</masterLabel>
+            <translation><!-- pick1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>pick2</masterLabel>
+            <translation><!-- pick2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Percent Help Text --></help>
+        <label><!-- PercentField --></label>
+        <name>PercentField__c</name>
+    </fields>
+    <fields>
+        <help><!-- Picklist Help Text --></help>
+        <label><!-- PicklistField --></label>
+        <name>PicklistField__c</name>
+        <picklistValues>
+            <masterLabel>pick1</masterLabel>
+            <translation><!-- pick1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>pick2</masterLabel>
+            <translation><!-- pick2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- TextArea Help Text --></help>
+        <label><!-- TextAreaField --></label>
+        <name>TextAreaField__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

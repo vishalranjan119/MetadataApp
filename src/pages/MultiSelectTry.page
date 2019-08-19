@@ -1,0 +1,42 @@
+<apex:page ><!--</apex:page>controller="CSVReader">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+        <apex:pageBlockTable value="{!dsList}" var="ds">
+            <apex:column headerValue="dd" id="abcd">
+                <apex:panelGrid columns="3" >
+                <apex:selectList id="sel1" value="{!leftselected}" multiselect="true" style="width:100px" size="5">
+                    <apex:selectOptions value="{!unselectedvalues}" />
+                </apex:selectList>
+                    <apex:panelGroup >
+                        <br/>
+                            <apex:commandButton value="Add" action="{!selectclick}" reRender="abcd"/>
+                        <br/><br/>
+                            <apex:commandButton value="Del" action="{!unselectclick}"  reRender="abcd" />
+                    </apex:panelGroup>
+                <apex:selectList id="sel2" value="{!rightselected}" multiselect="true" style="width:100px" size="5">
+                    <apex:selectOptions value="{!SelectedValues}" />
+                </apex:selectList>
+            </apex:panelGrid>
+            </apex:column>
+            </apex:pageBlockTable>
+                <apex:commandButton value="Add" action="{!fetchProfile}" />
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        <apex:panelGrid columns="3" >
+                <apex:selectList id="sel1" value="{!leftselected}" multiselect="true" style="width:100px" size="5">
+                    <apex:selectOptions value="{!unselectedvalues}" />
+                </apex:selectList>
+                    <apex:panelGroup >
+                        <br/>
+                            <apex:commandButton value="Add" action="{!selectclick}" reRender="abcd"/>
+                        <br/><br/>
+                            <apex:commandButton value="Del" action="{!unselectclick}"  reRender="abcd" />
+                    </apex:panelGroup>
+                <apex:selectList id="sel2" value="{!rightselected}" multiselect="true" style="width:100px" size="5">
+                    <apex:selectOptions value="{!SelectedValues}" />
+                </apex:selectList>
+            </apex:panelGrid>
+
+    </apex:form-->
+</apex:page>

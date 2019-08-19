@@ -1,0 +1,70 @@
+<apex:page controller="switchController" >
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="2" >
+                <apex:outputText ><b>Get Metadata By : </b></apex:outputText>
+                <apex:selectList value="{!selectedType}" size="1" >
+                    <apex:selectOption itemValue="None" itemLabel="----Select----"></apex:selectOption>
+                    <apex:selectOptions value="{!options}">
+                    </apex:selectOptions>
+                    <apex:actionSupport action="{!onMainOptionSelect}" event="onchange"/>
+                </apex:selectList>
+                
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="2" >
+                <apex:outputText rendered="{!isObjectSelected}" value=""><b>Select Object : </b></apex:outputText>
+                <apex:selectList value="{!selectedObject}" size="1" rendered="{!isObjectSelected}">
+                    <apex:selectOptions value="{!objNames}"></apex:selectOptions>    
+                </apex:selectList>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <apex:commandButton value="Get Metadata" action="{!setIsActiveforAll}"  />
+            </apex:pageBlockSection>    
+            <apex:pageBlockSection rendered="{!isRenderObjectTable}" id="objecttable" columns="1" >
+                <apex:pageBlockTable value="{!PrintList}" var="pl" >
+                    <apex:column headerValue="Type" value="{!pl.Type}"/>
+                    <apex:column headerValue="Name" value="{!pl.ElementName}"/>
+                    <apex:column headerValue="Active" >
+                        <apex:inputCheckbox value="{!pl.isActive}"></apex:inputCheckbox>
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                <apex:commandButton value="Deploy Changes" action="{!updateMetadata}" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:pageBlock rendered="{!isRenderMetadataTable}">
+            <apex:tabPanel switchType="client" selectedTab="name2" id="theTabPanel">
+                <apex:tab label="Workflow Rules" name="workflow" id="workflow">
+                    <apex:pageBlockTable value="{!workflowPrintList}" var="pl" >
+                        <apex:column headerValue="Object Name" value="{!pl.ObjectName}"/>
+                        <apex:column headerValue="Name" value="{!pl.ElementName}"/>
+                        <apex:column headerValue="Active" >
+                            <apex:inputCheckbox value="{!pl.isActive}"></apex:inputCheckbox>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:tab>
+                <apex:tab label="Validation Rules" name="validation" id="validation">
+                    <apex:pageBlockTable value="{!validationPrintList}" var="pl" >
+                        <apex:column headerValue="Object Name" value="{!pl.ObjectName}"/>
+                        <apex:column headerValue="Name" value="{!pl.ElementName}"/>
+                        <apex:column headerValue="Active" >
+                            <apex:inputCheckbox value="{!pl.isActive}"></apex:inputCheckbox>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:tab>
+                <!--apex:tab label="Triggers" name="triggers" id="triggers">
+                    <apex:pageBlockTable value="{!triggerPrintList}" var="pl" >
+                        <apex:column headerValue="Object Name" value="{!pl.ObjectName}"/>
+                        <apex:column headerValue="Name" value="{!pl.ElementName}"/>
+                        <apex:column headerValue="Active" >
+                            <apex:inputCheckbox value="{!pl.isActive}"></apex:inputCheckbox>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:tab-->
+            </apex:tabPanel>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Deploy Changes" action="{!updateMetadata}" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock> 
+    </apex:form>
+</apex:page>
